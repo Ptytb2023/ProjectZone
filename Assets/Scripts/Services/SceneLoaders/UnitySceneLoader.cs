@@ -6,7 +6,7 @@ using Scene = Data.Scene;
 
 namespace Services.SceneLoaders
 {
-    public class UnitySceneLoader : ISceneLoader
+    public class UnitySceneLoader : IServiceSceneLoader
     {
         public async Task LoadAsync(Scene scene) => 
             await SceneManager.LoadSceneAsync(scene.Name, scene.Mode);

@@ -5,21 +5,40 @@ namespace Infrastructure.FSMGame
 {
     public class GameStateMachine
     {
-        private Dictionary<Type, IState> _states;
+        private readonly Dictionary<Type, IExitableState> _states;
 
-        private IState _activeState = new IState.Empty();
+        private IExitableState _activeState = new IExitableState.Empty();
 
-        private void Enter<TState>() where TState : IState
+        public void Enter<TState>() where TState : class, IState
+        {
+            IState state = ChangeState<TState>();
+            state.Enter();
+        }
+
+        public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
+        {
+            TState state = ChangeState<TState>();
+            state.Enter(payload);
+        }
+
+        private TState ChangeState<TState>() where TState : class, IExitableState
+        {
+            IExitableState newState = GetState<TState>();
+
+            _activeState?.Exit();
+            _activeState = newState;
+
+            return newState as TState;
+        }
+
+        private IExitableState GetState<TState>() where TState : class, IExitableState
         {
             var typeState = typeof(TState);
 
             if (_states.TryGetValue(typeState, out var newState) == false)
-                throw new ArgumentNullException($"{nameof(typeState)}: This condition has not been registered");
+                throw new ArgumentNullException($"{nameof(typeState)}: This state has not been registered");
 
-            _activeState?.Exit();
-            _activeState = newState;
-            _activeState.Enter();
+            return newState;
         }
-
     }
 }
