@@ -1,5 +1,6 @@
 ﻿using Services.Input.Buttons;
 using System;
+using UI;
 using UnityEngine;
 
 namespace Services.Input
@@ -15,11 +16,14 @@ namespace Services.Input
         public event Action PressedShoot;
         public event Action PressedOpenInventory;
 
-        public MobileInputService(Joystick joystick, ButtonHolding buttonShoot, ButtonHolding buttonInventory)
+        public MobileInputService(UIInputModel uIInputModul)
         {
-            _joystick = joystick ?? throw new ArgumentNullException(nameof(joystick));
-            _buttonShoot = buttonShoot ?? throw new ArgumentNullException(nameof(buttonShoot));
-            _buttonInventory = buttonInventory ?? throw new ArgumentNullException(nameof(buttonInventory));
+            if(uIInputModul is null)
+                throw new ArgumentNullException(nameof(uIInputModul));
+
+            _joystick = uIInputModul.Joystick;
+            _buttonShoot = uIInputModul.ShootButton;
+            _buttonInventory = uIInputModul.InventaryButton;
 
             SubscribeToEvents();
         }
