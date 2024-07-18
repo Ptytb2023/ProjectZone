@@ -14,7 +14,7 @@ namespace Player
         private IInputService _input;
 
         [Inject]
-        private void Construct(IInputService inputService) =>
+        public void Construct(IInputService inputService) =>
             _input = inputService;
 
         private void Start() => _rigidbody = GetComponent<Rigidbody2D>();

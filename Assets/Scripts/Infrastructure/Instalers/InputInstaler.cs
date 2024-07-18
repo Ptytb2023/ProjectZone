@@ -7,12 +7,13 @@ namespace Infrastructure.Installers
 {
     public class InputInstaler : MonoInstaller
     {
-        [SerializeField] private UIInputModel _uIInputModulPrefab;
+        [SerializeField] private UIInputModel _uIInputModelPrefab;
 
         public override void InstallBindings()
         {
-            var inputModul = Container.InstantiatePrefab(_uIInputModulPrefab);
-            Container.Bind<IInputService>().To<MobileInputService>().WithArguments(inputModul);
+            var inputModel = Instantiate(_uIInputModelPrefab);
+
+            Container.BindInterfacesAndSelfTo<MobileInputService>().AsSingle().WithArguments(inputModel).NonLazy();
         }
     }
 }

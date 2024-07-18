@@ -1,6 +1,5 @@
 using Data;
 using Infrastructure.FSMGame;
-using Services.SceneLoaders;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +12,7 @@ namespace Infrastructure
         private IGameStateMachine _gameStateMachine;
 
         [Inject]
-        private void Construct(IGameStateMachine serviceSceneLoader)
+        public void Construct(IGameStateMachine serviceSceneLoader)
         {
             _gameStateMachine = serviceSceneLoader;
         }
