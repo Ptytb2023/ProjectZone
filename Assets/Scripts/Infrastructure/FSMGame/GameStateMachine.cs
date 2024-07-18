@@ -1,13 +1,23 @@
-﻿using System;
+﻿using Services.SceneLoaders;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.FSMGame
 {
-    public class GameStateMachine
+    public class GameStateMachine : IGameStateMachine
     {
         private readonly Dictionary<Type, IExitableState> _states;
 
         private IExitableState _activeState = new IExitableState.Empty();
+
+        public GameStateMachine(IServiceSceneLoader serviceSceneLoader)
+        {
+            _states = new Dictionary<Type, IExitableState>()
+            {
+                [typeof(LoadLevelState)] = new LoadLevelState(serviceSceneLoader)
+            };
+        }
+
 
         public void Enter<TState>() where TState : class, IState
         {

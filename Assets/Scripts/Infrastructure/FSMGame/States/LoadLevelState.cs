@@ -1,6 +1,5 @@
 using Data;
 using Services.SceneLoaders;
-using System;
 
 namespace Infrastructure.FSMGame
 {
@@ -21,7 +20,6 @@ namespace Infrastructure.FSMGame
 
         public void Exit()
         {
-            throw new NotImplementedException();
         }
     }
 }

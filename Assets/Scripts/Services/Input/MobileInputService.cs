@@ -1,6 +1,7 @@
 ﻿using System;
 using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Services.Input
 {
@@ -15,6 +16,7 @@ namespace Services.Input
         public event Action PressedShoot;
         public event Action PressedOpenInventory;
 
+        [Inject]
         public MobileInputService(UIInputModel uIInputModul)
         {
             if (uIInputModul is null)
