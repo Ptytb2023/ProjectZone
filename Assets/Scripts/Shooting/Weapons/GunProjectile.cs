@@ -41,8 +41,8 @@ namespace Shooting.Weapons
 
             var bullet = GetBullet();
 
-            Vector3 position = ShootPoint.position;
-            Vector3 direction = ShootPoint.forward;
+            Vector2 position = ShootPoint.position;
+            Vector2 direction = GetDirection();
             float damage = _weaponSettings.BaseDamage;
 
             bullet.Shoot(position, direction, damage);
@@ -54,6 +54,17 @@ namespace Shooting.Weapons
             return LeanPool.Spawn(prefab);
         }
 
+        private Vector2 GetDirection()
+        {
+            float angle = ShootPoint.eulerAngles.z;
+            Vector2 direction =
+                new Vector2(
+                Mathf.Cos(angle * Mathf.Deg2Rad),
+                Mathf.Sin(angle * Mathf.Deg2Rad));
+
+            return direction;
+        }
+
         private IEnumerator ReloadCoroutine()
         {
             IsReloading = true;
@@ -63,8 +74,8 @@ namespace Shooting.Weapons
             IsReloading = false;
         }
 
-        public void SetActive(bool value) => 
+        public void SetActive(bool value) =>
             gameObject.SetActive(value);
-       
+
     }
 }

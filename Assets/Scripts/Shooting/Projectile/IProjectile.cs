@@ -4,6 +4,6 @@ namespace Shooting.Projectiles
 {
     public interface IProjectile
     {
-        public void Shoot(Vector3 from, Vector3 direction, float damage);
+        public void Shoot(Vector2 from, Vector2 direction, float damage);
     }
 }
