@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Data
+namespace DataPersistence
 {
     [Serializable]
     public struct Scene

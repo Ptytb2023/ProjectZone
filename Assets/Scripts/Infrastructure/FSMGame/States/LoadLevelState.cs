@@ -1,4 +1,4 @@
-using Data;
+using DataPersistence;
 using Services.SceneLoaders;
 
 namespace Infrastructure.FSMGame

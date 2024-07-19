@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-using Scene = Data.Scene;
+using Scene = DataPersistence.Scene;
 
 namespace Services.SceneLoaders
 {
