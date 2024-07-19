@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Shooting.Projectile
+namespace Shooting.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour, IProjectile

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Shooting.Projectile
+namespace Shooting.Projectiles
 {
     public interface IProjectile
     {

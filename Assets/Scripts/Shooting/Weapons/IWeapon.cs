@@ -1,16 +1,21 @@
 ﻿using ReactivePropertes;
-using System.Collections;
 
 namespace Shooting.Weapons
 {
-    public interface IWeapon : IReloadeble
+    public interface IWeapon
     {
-        public IEnumerator Shoot();
+        void Shoot();
+        void SetActive(bool value);
     }
 
-    public interface IReloadeble
+    public interface IReloadable
     {
-        public IObservable<int> Ammo { get; }
-        public IEnumerator Reload();
+        bool IsReloading { get; }
+        IObservable<int> AmmoChanged { get; }
+        void Reload();
+    }
+
+    public interface IGun : IWeapon, IReloadable
+    {
     }
 }
