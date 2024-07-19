@@ -8,7 +8,7 @@ namespace DataPersistence
     {
         [field: SerializeField] public int BulletsAtOneShoot { get; private set; }
         [field: SerializeField] public int MaxAmmo { get; private set; }
-        [field: SerializeField] public int DelayBeetweenShoot { get; private set; }
+        [field: SerializeField] public float DelayBeetweenShoot { get; private set; }
         [field: SerializeField] public float TimeReload { get; private set; }
         [field: SerializeField] public int Damage { get; private set; }
     }

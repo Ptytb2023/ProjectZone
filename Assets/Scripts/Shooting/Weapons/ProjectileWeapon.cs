@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Shooting.Weapons
 {
-    public class ProjectioleWeapon : BaseWeapon
+    public class ProjectileWeapon : BaseWeapon
     {
         private WaitForSeconds _reloadTime;
         private WaitForSeconds _delayBetweenShoot;
@@ -23,7 +23,7 @@ namespace Shooting.Weapons
         }
 
         [Inject]
-        private void Construct(IPool<IProjectile> pool) => 
+        private void Construct(IPool<IProjectile> pool) =>
             _pool = pool;
 
         public override IEnumerator Reload()
@@ -39,8 +39,13 @@ namespace Shooting.Weapons
             Vector3 direction = PointShoot.forward;
             int damage = WeaponData.Damage;
 
-            var bullet = _pool.Request();
-            bullet.Shoot(position, direction, damage);
+            int CountBullets = WeaponData.BulletsAtOneShoot;
+
+            for (int i = 0; i < CountBullets; i++)
+            {
+                var bullet = _pool.Request();
+                bullet.Shoot(position, direction, damage);
+            }
 
             yield return _delayBetweenShoot;
         }
