@@ -15,7 +15,7 @@ namespace Shooting
 
         private ShootingRate _shootingRate = new ShootingRate();
 
-        [Inject]
+        [Inject]    
         private void Construct(IInputService inputService) =>
             _inputService = inputService;
     
