@@ -11,7 +11,7 @@ namespace Shooting.Projectiles
         private Rigidbody2D _rigidbody;
         private float _damage;
 
-        private void Start()
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _rigidbody.gravityScale = 0;
@@ -29,8 +29,8 @@ namespace Shooting.Projectiles
         {
             while (enabled)
             {
-                Vector2 newPosition = direction * _speedBullet * Time.deltaTime;
                 Vector2 CurrentPostion = _rigidbody.position;
+                Vector2 newPosition = direction * _speedBullet * Time.deltaTime;
 
                 _rigidbody.MovePosition(newPosition + CurrentPostion);
 

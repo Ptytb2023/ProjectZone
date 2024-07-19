@@ -14,19 +14,19 @@ namespace Shooting.Weapons
         [SerializeField] private AmmoReloadSettings _ammoReloadSettings;
 
         private WaitForSeconds _weaponReloadTime;
-        private IReactiveProperty<int> _ammoCount;
+        private IReactiveProperty<int> _ammoCount = new ReactiveProperty<int>();
 
         private Transform ShootPoint => _gunSettings.ShootPoint;
 
         public bool IsReloading { get; private set; }
         public ReactivePropertes.IObservable<int> AmmoChanged => _ammoCount;
+        public WeaponSettings Settings => _weaponSettings;
+
 
         private void Start()
         {
             var second = _ammoReloadSettings.ReloadTime;
             _weaponReloadTime = new WaitForSeconds(second);
-
-            _ammoCount = new ReactiveProperty<int>();
         }
 
         private void OnEnable() =>

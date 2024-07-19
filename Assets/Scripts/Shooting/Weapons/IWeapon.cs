@@ -1,9 +1,11 @@
 ﻿using ReactivePropertes;
+using Shooting.Settings;
 
 namespace Shooting.Weapons
 {
     public interface IWeapon
     {
+        public WeaponSettings Settings { get; }
         void Shoot();
         void SetActive(bool value);
     }

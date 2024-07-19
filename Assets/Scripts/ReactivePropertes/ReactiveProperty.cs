@@ -7,7 +7,7 @@ namespace ReactivePropertes
     {
         private T _currentValue;
 
-        private List<Action<T>> _subscribers;
+        private List<Action<T>> _subscribers = new List<Action<T>>();
 
         public T Value
         {

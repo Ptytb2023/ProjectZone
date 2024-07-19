@@ -12,6 +12,7 @@ namespace Shooting
 
         public int ShotsPerSecond => _shotsPerSecond;
 
+        public ShootingRate() { }
         public ShootingRate(int shotsPerSecond) =>
             SetShotsPerSecond(shotsPerSecond);
 
@@ -38,7 +39,7 @@ namespace Shooting
             if (gun.IsReloading)
                 return;
 
-            AttemptToShoot(gun);
+            AttemptToShoot((IWeapon)gun);
         }
 
         private bool CanShoot() =>
