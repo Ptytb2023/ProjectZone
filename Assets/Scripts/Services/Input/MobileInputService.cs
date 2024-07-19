@@ -1,54 +1,54 @@
-﻿using Services.Input.Buttons;
-using System;
+﻿using System;
 using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Services.Input
 {
     public class MobileInputService : IInputService, IDisposable
     {
-        private readonly Joystick _joystick;
-        private readonly ButtonHolding _buttonShoot;
-        private readonly ButtonHolding _buttonInventory;
+        private readonly UIInputModel _inputModel;
 
         public Vector2 Axis => GetAxisByJoystick();
+
+        private Joystick Joystick => _inputModel.Joystick;
 
         public event Action PressedShoot;
         public event Action PressedOpenInventory;
 
         public MobileInputService(UIInputModel uIInputModul)
         {
-            if(uIInputModul is null)
+            if (uIInputModul is null)
                 throw new ArgumentNullException(nameof(uIInputModul));
 
-            _joystick = uIInputModul.Joystick;
-            _buttonShoot = uIInputModul.ShootButton;
-            _buttonInventory = uIInputModul.InventaryButton;
+            _inputModel = uIInputModul;
 
             SubscribeToEvents();
         }
 
+        public void SetActive(bool active) =>
+         _inputModel.gameObject.SetActive(active);
 
         private Vector2 GetAxisByJoystick() =>
-           new Vector2(_joystick.Horizontal, _joystick.Vertical);
-
-        private void OnShootHolding() =>
-            PressedShoot?.Invoke();
-
-        private void OnInventoryOpen() =>
-            PressedOpenInventory?.Invoke();
+           new Vector2(Joystick.Horizontal, Joystick.Vertical);
 
 
         private void SubscribeToEvents()
         {
-            _buttonShoot.DownButton += OnShootHolding;
-            _buttonInventory.HoldButton += OnInventoryOpen;
+            _inputModel.ShootButton.HoldButton += OnShootHolding;
+            _inputModel.InventaryButton.HoldButton += OnInventoryOpen;
         }
+
+        private void OnShootHolding() =>
+           PressedShoot?.Invoke();
+
+        private void OnInventoryOpen() =>
+            PressedOpenInventory?.Invoke();
 
         public void Dispose()
         {
-            _buttonShoot.DownButton -= OnShootHolding;
-            _buttonInventory.HoldButton -= OnInventoryOpen;
+            _inputModel.ShootButton.HoldButton -= OnShootHolding;
+            _inputModel.InventaryButton.HoldButton -= OnInventoryOpen;
         }
     }
 }

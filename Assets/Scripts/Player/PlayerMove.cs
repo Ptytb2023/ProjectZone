@@ -14,13 +14,13 @@ namespace Player
         private IInputService _input;
 
         [Inject]
-        private void Construct(IInputService inputService) =>
+        public void Construct(IInputService inputService) =>
             _input = inputService;
 
         private void Start() => _rigidbody = GetComponent<Rigidbody2D>();
 
 
-        private void Update()
+        private void FixedUpdate()
         {
             Vector2 dircetion = _input.Axis;
 
@@ -32,7 +32,7 @@ namespace Player
 
         private void Move(Vector2 direction)
         {
-            direction *= _speedMove * Time.deltaTime;
+            direction *= _speedMove * Time.fixedDeltaTime;
 
             Vector2 movementVector = _rigidbody.position + direction;
 

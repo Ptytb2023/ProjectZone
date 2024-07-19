@@ -9,5 +9,7 @@ namespace Services.Input
 
         public event Action PressedShoot;
         public event Action PressedOpenInventory;
+
+        public void SetActive(bool active);
     }
 }
