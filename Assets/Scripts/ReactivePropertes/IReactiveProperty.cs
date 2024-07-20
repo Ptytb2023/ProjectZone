@@ -9,14 +9,13 @@ namespace ReactivePropertes
 
     public interface IReadOnlyReactiveProperty<T> : IObservable<T>
     {
-        public T GetValue();
+        public T GetCurrentValue();
     }
 
     public interface IObservable<T>
     {
-        public void Subscribe(Action<T> handler);
-        public void SubscribeAndUpdate(Action<T> handler);
-
-        public void UnSubscribe(Action<T> handler);
+        public void Subscribe(Action<T> subscriber);
+        public void SubscribeAndUpdate(Action<T> subscriber);
+        public void Unsubscribe(Action<T> subscriber);
     }
 }

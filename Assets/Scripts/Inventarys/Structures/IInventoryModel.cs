@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System;
 
-namespace Inventorys
+namespace Inventorys.Structures
 {
     public interface IInventoryModel
     {
@@ -18,8 +19,17 @@ namespace Inventorys
         public readonly int AmountToAdd;
         public readonly int AmountAdded;
 
+        public int Remains => AmountToAdd - AmountAdded;
+
         public AddItemsResult(string itemId, int amountToAdd, int amountAdded)
         {
+            if (amountAdded > amountToAdd)
+                throw new
+                    ArgumentOutOfRangeException($"" +
+                    $"{nameof(amountAdded)} " +
+                    $"must not be greater than " +
+                    $"{nameof(amountToAdd)}");
+
             ItemId = itemId;
             AmountToAdd = amountToAdd;
             AmountAdded = amountAdded;
@@ -37,16 +47,6 @@ namespace Inventorys
             ItemId = itemId;
             AmountRemoved = amountRemoved;
             Success = success;
-        }
-    }
-
-    public struct InventoryStatus
-    {
-        public readonly Dictionary<string, int> ItemCounts;
-
-        public InventoryStatus(Dictionary<string, int> itemCounts)
-        {
-            ItemCounts = itemCounts;
         }
     }
 }

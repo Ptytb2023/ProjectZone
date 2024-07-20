@@ -44,7 +44,7 @@ namespace Shooting
                 return;
 
             _currentWeapon.SetActive(false);
-            _currentWeapon.AmmoChanged.UnSubscribe(OnAmmoChanged);
+            _currentWeapon.AmmoChanged.Unsubscribe(OnAmmoChanged);
         }
 
         private void OnAmmoChanged(int count)

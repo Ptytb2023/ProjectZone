@@ -9,6 +9,12 @@ namespace ReactivePropertes
 
         private List<Action<T>> _subscribers = new List<Action<T>>();
 
+        public ReactiveProperty() =>
+            Value = default(T);
+
+        public ReactiveProperty(T value) =>
+            Value = value;
+
         public T Value
         {
             get => _currentValue;
@@ -19,22 +25,22 @@ namespace ReactivePropertes
             }
         }
 
-        public T GetValue() =>
+        public T GetCurrentValue() =>
             Value;
 
-        public void Subscribe(Action<T> handler) =>
-            _subscribers.Add(handler);
+        public void Subscribe(Action<T> subscriber) =>
+            _subscribers.Add(subscriber);
 
-        public void SubscribeAndUpdate(Action<T> handler)
+        public void SubscribeAndUpdate(Action<T> subscriber)
         {
-            _subscribers.Add(handler);
-            handler?.Invoke(Value);
+            _subscribers.Add(subscriber);
+            subscriber?.Invoke(Value);
         }
 
-        public void UnSubscribe(Action<T> handler) =>
-            _subscribers.Remove(handler);
+        public void Unsubscribe(Action<T> subscriber) =>
+            _subscribers.Remove(subscriber);
 
         private void NotifySubscribers() =>
-            _subscribers.ForEach(subscribe => subscribe?.Invoke(Value));
+            _subscribers.ForEach(subscriber => subscriber?.Invoke(Value));
     }
 }
