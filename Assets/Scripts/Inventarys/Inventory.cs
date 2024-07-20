@@ -3,123 +3,115 @@ using Inventarys.Data;
 using Inventorys.Slot;
 using Inventorys.Structures;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
 namespace Inventarys
 {
-    public class Inventory : IReadOnlyInventory
+    public class Inventory : IInventory
     {
-        private Dictionary<string, InventorySlot> _slotByItemId;
-        private Dictionary<int, InventorySlot> _slotBySlotId;
+        private readonly Dictionary<int, InventorySlot> _slotBySlotId;
+        private readonly IItemAdder _itemAdder;
+        private readonly IItemRemover _itemRemover;
 
-        private SizeInvetoryData _size;
+        private readonly int _size;
 
-        public IEnumerable<IReadOnlyInventorySlot> InventorySlots => _slotByItemId.Values;
+        public int Size => _size;
+        public IReadOnlyInventorySlot[] InventorySlots => _slotBySlotId.Values.ToArray();
 
-        public event Action<AddItemsResult> ItemAdded;
-        public event Action<RemoveItemResult> ItemRemoved;
-        public event Action<SizeInvetoryData> SizeChanged;
+        public event Action<string, int> ItemAdded;
+        public event Action<string, int> ItemRemoved;
+        public event Action<int> SizeChanged;
 
-        public Inventory(InvetoryData data)
+        public Inventory(InventoryData data)
         {
-            _slotByItemId = new Dictionary<string, InventorySlot>();
-            _size = data.SizeInvetory;
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            if (data.Slots == null) throw new ArgumentNullException(nameof(data.Slots));
+            if (data.Slots.Count > data.Size) throw new ArgumentOutOfRangeException(nameof(data.Slots));
+
+            _slotBySlotId = new Dictionary<int, InventorySlot>();
+            _size = data.Size;
+
+            CreateSlots(data.Slots);
+
+            _itemAdder = new ItemAdder(_slotBySlotId);
+            _itemRemover = new ItemRemover(_slotBySlotId);
+        }
+
+        private void CreateSlots(List<InventorySlotData> slots)
+        {
+            for (int i = 0; i < slots.Count; i++)
+                _slotBySlotId[i] = new InventorySlot(slots[i]);
+
+            for (int i = slots.Count; i < _size; i++)
+                _slotBySlotId[i] = new InventorySlot();
         }
 
         public int GetItemAmount(string itemId) =>
             HasItem(itemId) ? CalculateTotalItemAmount(itemId) : 0;
 
+        private int CalculateTotalItemAmount(string itemId) =>
+            InventorySlots
+                .Where(slot => slot.ItemId.GetValue() == itemId)
+                .Sum(slot => slot.Amount.GetValue());
+
         public bool HasItem(string itemId) =>
-            _slotByItemId.ContainsKey(itemId);
+            InventorySlots.Any(x => x.ItemId.GetValue() == itemId);
 
-        public AddItemsResult AddItem(int slotId, InventoryItem item, int count)
+        public bool TryGetSlotIndexByItemId(string itemId, out int slotId)
         {
-            if (item.IsStackable && IsSlotValid(slotId) == false)
-                return CreateResultAdd(item.Id, count, 0);
-
-
-            InventorySlot slot = _slotBySlotId[slotId];
-            int currentAmount = slot.Amount.GetCurrentValue();
-            int countAdded = Mathf.Clamp(currentAmount + count, 0, item.MaxStack);
-
-            slot.SetAmount(countAdded);
-
-            return CreateResultAdd(item.Id, count, countAdded, true);
-        }
-
-        public AddItemsResult AddItem(InventoryItem item, int count)
-        {
-            int requestedCount = count;
-            int countAdded = 0;
-
-            foreach ((int id, InventorySlot slot) in _slotBySlotId)
+            foreach (var (id, slot) in _slotBySlotId)
             {
-                if ((slot.ItemId.GetCurrentValue() == item.Id || slot.IsEmpty) == false)
-                    continue;
-
-                var result = AddItem(id, item, requestedCount);
-                requestedCount -= result.Remains;
-
-                countAdded = result.AmountAdded;
-
-                if (requestedCount <= 0)
-                    break;
+                if (slot.ItemId.GetValue() == itemId)
+                {
+                    slotId = id;
+                    return true;
+                }
             }
 
-            return CreateResultAdd(item.Id, count, countAdded);
+            slotId = -1;
+            return false;
         }
 
-        public RemoveItemResult RemoveItem(int slotId, int count)
+        public AddItemsResult AddItem(int slotId, InventoryItem item, int count) =>
+            AddItemInternal(slotId, item, count);
+
+        public AddItemsResult AddItem(InventoryItem item, int count) =>
+            AddItemInternal(null, item, count);
+
+        private AddItemsResult AddItemInternal(int? slotId, InventoryItem item, int count)
         {
-            if (!IsSlotValid(slotId))
-                return CreateResultRemove(string.Empty, 0, false);
+            var result = slotId.HasValue
+                ? _itemAdder.AddItem(slotId.Value, item, count)
+                : _itemAdder.AddItem(item, count);
 
-            var slot = _slotBySlotId[slotId];
-            int remains = slot.Amount.GetCurrentValue() - count;
-
-            if (remains < 0)
-                return CreateResultRemove(string.Empty, 0, false);
-
-            slot.SetAmount(remains);
-
-            return CreateResultRemove(slot.ItemId.GetCurrentValue(), count, true, true);
-        }
-
-        private int CalculateTotalItemAmount(string itemId)
-        {
-            int totalAmount = 0;
-
-            foreach (var slot in InventorySlots)
-                if (slot.ItemId.GetCurrentValue() == itemId)
-                    totalAmount += slot.Amount.GetCurrentValue();
-
-            return totalAmount;
-        }
-
-
-        private bool IsSlotValid(int slotId) =>
-            _slotBySlotId.ContainsKey(slotId);
-
-        private RemoveItemResult CreateResultRemove(string itemId, int amount, bool success,
-            bool notify = false)
-        {
-            var result = new RemoveItemResult(itemId, amount, success);
-
-            if (notify)
-                ItemRemoved?.Invoke(result);
+            if (result.AmountAdded > 0)
+                TriggerItemAddedEvent(item, result);
 
             return result;
         }
 
-        private AddItemsResult CreateResultAdd(string itemID, int requestedCount, int countAdded,
-            bool notify = false)
-        {
-            var result = new AddItemsResult(itemID, requestedCount, countAdded);
+        public RemoveItemResult RemoveItem(InventoryItem item, int count) =>
+            RemoveItemIterval(null, count, item);
 
-            if (notify)
-                ItemAdded?.Invoke(result);
+        public RemoveItemResult RemoveItem(int slotId, int count) =>
+            RemoveItemIterval(slotId, count, null);
+
+        private RemoveItemResult RemoveItemIterval(int? slotIndex, int count, InventoryItem item)
+        {
+            var result = slotIndex.HasValue
+                ? _itemRemover.RemoveItem(slotIndex.Value, count)
+                : _itemRemover.RemoveItem(item, count);
+
+            if (result.Success)
+                TriggerItemRemoveEvent(item.Id, result);
 
             return result;
         }
+
+        private void TriggerItemAddedEvent(InventoryItem item, AddItemsResult result) =>
+          ItemAdded?.Invoke(item.Id, result.AmountAdded);
+
+        private void TriggerItemRemoveEvent(string itemId, RemoveItemResult result) =>
+            ItemRemoved?.Invoke(itemId, result.AmountRemoved);
     }
 }

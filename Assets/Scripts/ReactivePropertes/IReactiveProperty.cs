@@ -9,7 +9,7 @@ namespace ReactivePropertes
 
     public interface IReadOnlyReactiveProperty<T> : IObservable<T>
     {
-        public T GetCurrentValue();
+        public T GetValue();
     }
 
     public interface IObservable<T>

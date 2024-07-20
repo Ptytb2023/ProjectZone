@@ -25,7 +25,7 @@ namespace ReactivePropertes
             }
         }
 
-        public T GetCurrentValue() =>
+        public T GetValue() =>
             Value;
 
         public void Subscribe(Action<T> subscriber) =>

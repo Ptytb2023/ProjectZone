@@ -1,4 +1,5 @@
-﻿using Inventarys.Data;
+﻿using System;
+using Inventarys.Data;
 using ReactivePropertes;
 
 namespace Inventorys.Slot
@@ -12,6 +13,11 @@ namespace Inventorys.Slot
         public IReadOnlyReactiveProperty<int> Amount => _amount;
         public IReadOnlyReactiveProperty<string> ItemId => _itemId;
 
+        public InventorySlot()
+        {
+            _amount = new ReactiveProperty<int>();
+            _itemId = new ReactiveProperty<string>();
+        }
 
         public InventorySlot(InventorySlotData data)
         {
@@ -19,8 +25,16 @@ namespace Inventorys.Slot
             _itemId = new ReactiveProperty<string>(data.ItemId);
         }
 
-        public void SetAmount(int value) =>
+        public void SetAmount(int value)
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(value)} should not be zero");
+
+            if (value == 0)
+                _itemId.Value = string.Empty;
+
             _amount.Value = value;
+        }
 
         public void SetItemId(string id, int value)
         {

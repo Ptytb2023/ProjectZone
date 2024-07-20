@@ -1,18 +1,18 @@
 ﻿using System;
 using Inventorys.Slot;
-using System.Collections.Generic;
-using Inventarys.Data;
 using Inventorys.Structures;
 
 namespace Inventarys
 {
     public interface IReadOnlyInventory
     {
-        event Action<AddItemsResult> ItemAdded;
-        event Action<RemoveItemResult> ItemRemoved;
-        event Action<SizeInvetoryData> SizeChanged;
+        int Size { get; }
 
-        IEnumerable<IReadOnlyInventorySlot> InventorySlots { get; }
+        event Action<string,int> ItemAdded;
+        event Action<string,int> ItemRemoved;
+        event Action<int> SizeChanged;
+
+        IReadOnlyInventorySlot[] InventorySlots { get; }
 
         bool HasItem(string itemId);
         int GetItemAmount(string itemId);
