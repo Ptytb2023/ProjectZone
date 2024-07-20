@@ -2,9 +2,10 @@
 using Inventorys.Slot;
 using Inventorys.Structures;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Inventarys
+namespace Inventarys.Model
 {
     public class ItemAdder : IItemAdder
     {
@@ -14,18 +15,18 @@ namespace Inventarys
             _slotBySlotId = slotBySlotId;
 
 
-        public AddItemsResult AddItem(int slotIndex, InventoryItem item, int count)
+        public AddItemsResult AddItem(int slotIndex, InventoryItem item, int amount)
         {
-            if (CanStackItemInSlot(slotIndex, item))
-                return CreateAddItemsResult(item.Id, count, 0);
+            if (!CanStackItemInSlot(slotIndex, item, amount))
+                return CreateAddItemsResult(item.Id, amount, 0);
 
             InventorySlot slot = _slotBySlotId[slotIndex];
             int currentAmount = slot.Amount.GetValue();
-            int countAdded = Mathf.Clamp(currentAmount + count, 0, item.MaxStack);
+            int countAdded = Mathf.Clamp(currentAmount + amount, 0, item.MaxStack);
 
             slot.SetAmount(countAdded);
 
-            return CreateAddItemsResult(item.Id, count, countAdded);
+            return CreateAddItemsResult(item.Id, amount, countAdded);
         }
 
         public AddItemsResult AddItem(InventoryItem item, int quantity)
@@ -50,8 +51,9 @@ namespace Inventarys
             return CreateAddItemsResult(item.Id, quantity, totalAdded);
         }
 
-        private bool CanStackItemInSlot(int slotIndex, InventoryItem item) =>
-            item.IsStackable && IsSlotValid(slotIndex) == false;
+        private bool CanStackItemInSlot(int slotIndex, InventoryItem item, int amount) =>
+          IsSlotValid(slotIndex) && item.IsStackable
+                && _slotBySlotId[slotIndex].Amount.GetValue() < item.MaxStack;
 
         private bool IsSlotValid(int slotIndex) =>
           _slotBySlotId.ContainsKey(slotIndex);

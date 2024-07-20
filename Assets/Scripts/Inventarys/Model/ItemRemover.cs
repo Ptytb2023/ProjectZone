@@ -4,7 +4,7 @@ using Inventorys.Slot;
 using Inventorys.Structures;
 using System.Collections.Generic;
 
-namespace Inventarys
+namespace Inventarys.Model
 {
     public class ItemRemover : IItemRemover
     {

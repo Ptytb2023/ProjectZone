@@ -23,5 +23,8 @@ namespace Inventorys.Structures
             AmountToAdd = amountToAdd;
             AmountAdded = amountAdded;
         }
+
+        public override string ToString() => 
+            $"ID:{ItemId}, AmountToAdd{AmountToAdd}, AmountAdded{AmountAdded}";
     }
 }

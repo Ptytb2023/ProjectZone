@@ -17,14 +17,19 @@ namespace Services.Input.Buttons
         {
             DownButton?.Invoke();
 
-            _holdingRoutine = StartCoroutine(ProcessHoldingInput());
+            if (_holdingRoutine == null)
+                _holdingRoutine = StartCoroutine(ProcessHoldingInput());
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             UpButton?.Invoke();
 
-            StopCoroutine(_holdingRoutine);
+            if (_holdingRoutine is not null)
+            {
+                StopCoroutine(_holdingRoutine);
+                _holdingRoutine = null;
+            }
         }
 
         private IEnumerator ProcessHoldingInput()

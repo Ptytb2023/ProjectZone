@@ -5,7 +5,7 @@ using Inventorys.Structures;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Inventarys
+namespace Inventarys.Model
 {
     public class Inventory : IInventory
     {
@@ -20,9 +20,8 @@ namespace Inventarys
 
         public event Action<string, int> ItemAdded;
         public event Action<string, int> ItemRemoved;
-        public event Action<int> SizeChanged;
 
-        public Inventory(InventoryData data)
+        public Inventory(InvetoryData data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
             if (data.Slots == null) throw new ArgumentNullException(nameof(data.Slots));

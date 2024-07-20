@@ -1,16 +1,14 @@
 ﻿using Inventarys.Data;
 using Inventorys.Structures;
 
-namespace Inventarys
+namespace Inventarys.Model
 {
     public interface IInventory :  IExpandableInventory , IReadOnlyInventory
     {
         bool TryGetSlotIndexByItemId(string itemId, out int slotIndex);
     }
 
-    public interface IExpandableInventory : IItemAdder, IItemRemover
-    {
-    }
+    public interface IExpandableInventory : IItemAdder, IItemRemover { }
 
     public interface IItemRemover
     {

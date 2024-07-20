@@ -2,7 +2,7 @@
 using Inventorys.Slot;
 using Inventorys.Structures;
 
-namespace Inventarys
+namespace Inventarys.Model
 {
     public interface IReadOnlyInventory
     {
@@ -10,7 +10,6 @@ namespace Inventarys
 
         event Action<string,int> ItemAdded;
         event Action<string,int> ItemRemoved;
-        event Action<int> SizeChanged;
 
         IReadOnlyInventorySlot[] InventorySlots { get; }
 
