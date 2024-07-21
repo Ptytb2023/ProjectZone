@@ -27,7 +27,7 @@ namespace Inventarys.Model
             return CreateResultRemove(slot.ItemId.GetValue(), count, true);
         }
 
-        public RemoveItemResult RemoveItem(InventoryItem item, int count)
+        public RemoveItemResult RemoveItem(IInventoryItem item, int count)
         {
             int totalRemoved = 0;
             string itemId = item.Id;

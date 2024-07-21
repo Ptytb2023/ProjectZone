@@ -13,12 +13,12 @@ namespace Inventarys.Model
     public interface IItemRemover
     {
         RemoveItemResult RemoveItem(int slotIndex, int count);
-        RemoveItemResult RemoveItem(InventoryItem item, int count);
+        RemoveItemResult RemoveItem(IInventoryItem item, int count);
     }
 
     public interface IItemAdder
     {
-        AddItemsResult AddItem(int slotIndex, InventoryItem item, int count);
-        AddItemsResult AddItem(InventoryItem item, int count);
+        AddItemsResult AddItem(int slotIndex, IInventoryItem item, int count);
+        AddItemsResult AddItem(IInventoryItem item, int count);
     }
 }

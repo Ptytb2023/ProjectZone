@@ -25,6 +25,6 @@ namespace Inventorys.Structures
         }
 
         public override string ToString() => 
-            $"ID:{ItemId}, AmountToAdd{AmountToAdd}, AmountAdded{AmountAdded}";
+            $"ID:{ItemId}, AmountToAdd: {AmountToAdd}, AmountAdded: {AmountAdded}";
     }
 }

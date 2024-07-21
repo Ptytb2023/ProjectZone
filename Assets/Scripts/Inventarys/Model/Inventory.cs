@@ -71,13 +71,13 @@ namespace Inventarys.Model
             return false;
         }
 
-        public AddItemsResult AddItem(int slotId, InventoryItem item, int count) =>
+        public AddItemsResult AddItem(int slotId, IInventoryItem item, int count) =>
             AddItemInternal(slotId, item, count);
 
-        public AddItemsResult AddItem(InventoryItem item, int count) =>
+        public AddItemsResult AddItem(IInventoryItem item, int count) =>
             AddItemInternal(null, item, count);
 
-        private AddItemsResult AddItemInternal(int? slotId, InventoryItem item, int count)
+        private AddItemsResult AddItemInternal(int? slotId, IInventoryItem item, int count)
         {
             var result = slotId.HasValue
                 ? _itemAdder.AddItem(slotId.Value, item, count)
@@ -89,13 +89,13 @@ namespace Inventarys.Model
             return result;
         }
 
-        public RemoveItemResult RemoveItem(InventoryItem item, int count) =>
+        public RemoveItemResult RemoveItem(IInventoryItem item, int count) =>
             RemoveItemIterval(null, count, item);
 
         public RemoveItemResult RemoveItem(int slotId, int count) =>
             RemoveItemIterval(slotId, count, null);
 
-        private RemoveItemResult RemoveItemIterval(int? slotIndex, int count, InventoryItem item)
+        private RemoveItemResult RemoveItemIterval(int? slotIndex, int count, IInventoryItem item)
         {
             var result = slotIndex.HasValue
                 ? _itemRemover.RemoveItem(slotIndex.Value, count)
@@ -107,7 +107,7 @@ namespace Inventarys.Model
             return result;
         }
 
-        private void TriggerItemAddedEvent(InventoryItem item, AddItemsResult result) =>
+        private void TriggerItemAddedEvent(IInventoryItem item, AddItemsResult result) =>
           ItemAdded?.Invoke(item.Id, result.AmountAdded);
 
         private void TriggerItemRemoveEvent(string itemId, RemoveItemResult result) =>
