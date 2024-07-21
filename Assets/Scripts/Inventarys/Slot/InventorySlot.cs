@@ -21,7 +21,7 @@ namespace Inventorys.Slot
 
         public InventorySlot(InventorySlotData data)
         {
-            if (data.ItemId != string.Empty && data.Amount <= 0)
+            if (string.IsNullOrEmpty(data.ItemId) || data.Amount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(data.Amount));
 
             _amount = new ReactiveProperty<int>(data.Amount);
@@ -48,7 +48,6 @@ namespace Inventorys.Slot
             _amount.Value = value;
         }
 
-
         private void ValidateAmount(int value)
         {
             if (value < 0)
@@ -60,6 +59,5 @@ namespace Inventorys.Slot
             if (string.IsNullOrEmpty(_itemId.Value))
                 throw new NullReferenceException("Cannot set amount if the object does not contain an itemID");
         }
-
     }
 }

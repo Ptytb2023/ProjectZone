@@ -3,7 +3,6 @@ using Services.SceneLoaders;
 
 namespace Infrastructure.FSMGame
 {
-
     public class LoadLevelState : IPayloadedState<Scene>
     {
         private readonly IServiceSceneLoader _serviceProvider;

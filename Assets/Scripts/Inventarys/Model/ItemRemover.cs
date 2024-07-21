@@ -8,10 +8,10 @@ namespace Inventarys.Model
 {
     public class ItemRemover : IItemRemover
     {
-        private readonly Dictionary<int, InventorySlot> _slotBySlotId;
+        private readonly Dictionary<int, InventorySlot> _slots;
 
         public ItemRemover(Dictionary<int, InventorySlot> slotBySlotId) =>
-            _slotBySlotId = slotBySlotId;
+            _slots = slotBySlotId;
 
 
         public RemoveItemResult RemoveItem(int slotIndex, int count)
@@ -34,7 +34,7 @@ namespace Inventarys.Model
 
             List<Action> removed = new List<Action>();
 
-            foreach (var slot in _slotBySlotId.Values)
+            foreach (var slot in _slots.Values)
             {
                 if (!(slot.ItemId.GetValue() == itemId))
                     continue;
@@ -59,7 +59,7 @@ namespace Inventarys.Model
         }
 
         private bool TryGetSlot(int slotIndex, out InventorySlot slot) =>
-         _slotBySlotId.TryGetValue(slotIndex, out slot);
+         _slots.TryGetValue(slotIndex, out slot);
 
         private bool CanRemoveItem(InventorySlot slot, int count) =>
             slot.Amount.GetValue() >= count;

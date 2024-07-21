@@ -7,7 +7,7 @@ namespace Infrastructure.Installers
 {
     public class InputInstaler : MonoInstaller
     {
-        [SerializeField] private UIInputModel _uIInputModelPrefab;
+        [SerializeField] private PlayerInputMobile _uIInputModelPrefab;
 
         public override void InstallBindings()
         {

@@ -33,15 +33,7 @@ namespace Shooting
             weapon.Shoot();
             _lastShotTimestamp = Time.time;
         }
-
-        public void AttemptToShoot(IGun gun)
-        {
-            if (gun.IsReloading)
-                return;
-
-            AttemptToShoot((IWeapon)gun);
-        }
-
+    
         private bool CanShoot() =>
             Time.time - _lastShotTimestamp >= _intervalBetweenShots;
     }

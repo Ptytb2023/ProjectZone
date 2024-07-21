@@ -9,14 +9,14 @@ namespace Inventarys.Model
 {
     public class Inventory : IInventory
     {
-        private readonly Dictionary<int, InventorySlot> _slotBySlotId;
+        private readonly Dictionary<int, InventorySlot> _slots;
         private readonly IItemAdder _itemAdder;
         private readonly IItemRemover _itemRemover;
 
         private readonly int _size;
 
         public int Size => _size;
-        public IReadOnlyInventorySlot[] InventorySlots => _slotBySlotId.Values.ToArray();
+        public IReadOnlyInventorySlot[] InventorySlots => _slots.Values.ToArray();
 
         public event Action<string, int> ItemAdded;
         public event Action<string, int> ItemRemoved;
@@ -27,38 +27,38 @@ namespace Inventarys.Model
             if (data.Slots == null) throw new ArgumentNullException(nameof(data.Slots));
             if (data.Slots.Count > data.Size) throw new ArgumentOutOfRangeException(nameof(data.Slots));
 
-            _slotBySlotId = new Dictionary<int, InventorySlot>();
+            _slots = new Dictionary<int, InventorySlot>();
             _size = data.Size;
 
             CreateSlots(data.Slots);
 
-            _itemAdder = new ItemAdder(_slotBySlotId);
-            _itemRemover = new ItemRemover(_slotBySlotId);
+            _itemAdder = new ItemAdder(_slots);
+            _itemRemover = new ItemRemover(_slots);
         }
 
         private void CreateSlots(List<InventorySlotData> slots)
         {
             for (int i = 0; i < slots.Count; i++)
-                _slotBySlotId[i] = new InventorySlot(slots[i]);
+                _slots[i] = new InventorySlot(slots[i]);
 
             for (int i = slots.Count; i < _size; i++)
-                _slotBySlotId[i] = new InventorySlot();
+                _slots[i] = new InventorySlot();
         }
 
         public int GetItemAmount(string itemId) =>
-            HasItem(itemId) ? CalculateTotalItemAmount(itemId) : 0;
+            ContainsItem(itemId) ? CalculateTotalItemAmount(itemId) : 0;
 
         private int CalculateTotalItemAmount(string itemId) =>
             InventorySlots
                 .Where(slot => slot.ItemId.GetValue() == itemId)
                 .Sum(slot => slot.Amount.GetValue());
 
-        public bool HasItem(string itemId) =>
+        public bool ContainsItem(string itemId) =>
             InventorySlots.Any(x => x.ItemId.GetValue() == itemId);
 
         public bool TryGetSlotIndexByItemId(string itemId, out int slotId)
         {
-            foreach (var (id, slot) in _slotBySlotId)
+            foreach (var (id, slot) in _slots)
             {
                 if (slot.ItemId.GetValue() == itemId)
                 {

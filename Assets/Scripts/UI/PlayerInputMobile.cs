@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UIInputModel : MonoBehaviour
+    public class PlayerInputMobile : MonoBehaviour
     {
         [field: SerializeField] public Joystick Joystick { get; private set; }
         [field: SerializeField] public ButtonHolding ShootButton { get; private set; }

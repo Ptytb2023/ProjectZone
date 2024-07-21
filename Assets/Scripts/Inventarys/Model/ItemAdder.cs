@@ -9,17 +9,17 @@ namespace Inventarys.Model
 {
     public class ItemAdder : IItemAdder
     {
-        private readonly Dictionary<int, InventorySlot> _slotBySlotId;
+        private readonly Dictionary<int, InventorySlot> _slots;
 
         public ItemAdder(Dictionary<int, InventorySlot> slotBySlotId) =>
-            _slotBySlotId = slotBySlotId;
+            _slots = slotBySlotId;
 
         public AddItemsResult AddItem(int slotIndex, IInventoryItem item, int amount)
         {
             if (!CanStackItemInSlot(slotIndex, item, amount))
                 return CreateAddItemsResult(item.Id, amount, 0);
 
-            InventorySlot slot = _slotBySlotId[slotIndex];
+            InventorySlot slot = _slots[slotIndex];
 
             return AddItem(slot, item, amount);
         }
@@ -29,7 +29,7 @@ namespace Inventarys.Model
             int remainingAmountToAdd = amount;
             int totalAdded = 0;
 
-            foreach (var (slotId, slot) in _slotBySlotId)
+            foreach (var (slotId, slot) in _slots)
             {
                 if (!slot.CanPlaceItemInSlot(item))
                     continue;
@@ -62,10 +62,10 @@ namespace Inventarys.Model
 
         private bool CanStackItemInSlot(int slotIndex, IInventoryItem item, int amount) =>
         IsSlotValid(slotIndex) && item.IsStackable
-              && _slotBySlotId[slotIndex].Amount.GetValue() < item.MaxStack;
+              && _slots[slotIndex].Amount.GetValue() < item.MaxStack;
 
         private bool IsSlotValid(int slotIndex) =>
-          _slotBySlotId.ContainsKey(slotIndex);
+          _slots.ContainsKey(slotIndex);
 
         private AddItemsResult CreateAddItemsResult(string itemID, int requestedCount, int countAdded) =>
             new AddItemsResult(itemID, requestedCount, countAdded);

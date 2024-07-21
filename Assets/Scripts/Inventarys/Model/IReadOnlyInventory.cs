@@ -13,7 +13,7 @@ namespace Inventarys.Model
 
         IReadOnlyInventorySlot[] InventorySlots { get; }
 
-        bool HasItem(string itemId);
+        bool ContainsItem(string itemId);
         int GetItemAmount(string itemId);
     }
 }
