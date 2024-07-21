@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ItemSystem;
+using UnityEngine;
 
 namespace Services
 {
@@ -33,5 +34,15 @@ namespace Services
 
         public bool ContainsItem(string itemId) =>
             _items.ContainsKey(itemId);
+
+        public bool TryUseItem(string itemId, GameObject gameObject)
+        {
+            var item = GetItem(itemId);
+
+            if (item is IUsabelItem usabelItem)
+                return usabelItem.TryUseItem(gameObject);
+
+            return false;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Inventorys.Slot;
+using System;
 
 namespace Inventarys
 {
@@ -8,6 +9,7 @@ namespace Inventarys
         event Action<int, int> RequestRemoveItemInSlot;
         event Action<int> RequestUseItemInSlot;
 
+        void Init(IReadOnlyInventorySlot[] slots);
         void CloseInventory();
         void OpenInventory();
     }

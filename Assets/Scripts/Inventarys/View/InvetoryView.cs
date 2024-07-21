@@ -26,6 +26,9 @@ namespace Inventarys
         private void Construct(IItemService itemService) =>
             _itemService = itemService;
 
+        public void Init(IReadOnlyInventorySlot[] slots) => 
+            _inventoryPage.Init(slots);
+
         private void OnEnable()
         {
             _inventoryPage.ClickSlot += OnClickInventorySlot;
@@ -71,6 +74,5 @@ namespace Inventarys
 
         private void OnRequestRemove(IReadOnlyInventorySlot slot, int amount) =>
             RequestRemoveItemInSlot?.Invoke(_currentIndexSelectedSlot, amount);
-
     }
 }

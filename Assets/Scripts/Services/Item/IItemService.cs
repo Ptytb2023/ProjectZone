@@ -1,4 +1,5 @@
 ﻿using ItemSystem;
+using UnityEngine;
 
 namespace Services
 {
@@ -6,6 +7,7 @@ namespace Services
     {
         bool ContainsItem(string itemId);
         IItem GetItem(string itemId);
+        bool TryUseItem(string itemId, GameObject gameObject);
     }
 }
 
