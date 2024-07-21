@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ItemSystem
 {
-    [CreateAssetMenu(menuName = "ItemData", fileName = "ScriptableObject/ItemSystem/ItemData", order = 51)]
+    [CreateAssetMenu(fileName = "ItemData", menuName = "ScriptableObject/ItemSystem/ItemData", order = 51)]
     public class ItemData : ScriptableObject
     {
         [SerializeField] private List<ItemResource> _itemResources;

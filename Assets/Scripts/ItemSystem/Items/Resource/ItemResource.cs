@@ -1,5 +1,8 @@
-﻿namespace ItemSystem.Items
+﻿using System;
+
+namespace ItemSystem.Items
 {
+    [Serializable]
     public class ItemResource : BaseItem
     {
         public override ItemType Type => ItemType.None;

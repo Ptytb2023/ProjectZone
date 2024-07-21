@@ -25,20 +25,19 @@ namespace Inventarys
         }
 
         private void Start() =>
-            Initialization();
+          Initialization();
 
         private void OnEnable() =>
-            Subscriptions();
+          Subscriptions();
 
         private void OnDisable() =>
-        Unsubscribes();
+          Unsubscribes();
 
         public AddItemsResult AddItem(int slotIndex, IInventoryItem item, int count) =>
             _inventory.AddItem(slotIndex, item, count);
 
         public AddItemsResult AddItem(IInventoryItem item, int count) =>
-            _inventory.AddItem((IInventoryItem)item, count);
-
+            _inventory.AddItem(item, count);
 
         private void OnPressedOpenInventory() =>
             _invetoryView.OpenInventory();
@@ -84,6 +83,5 @@ namespace Inventarys
             _invetoryView.RequestDropItemInSlot -= OnRequestDropItemInSlot;
             _invetoryView.RequestUseItemInSlot -= OnRequestUseItemInSlot;
         }
-
     }
 }

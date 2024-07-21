@@ -13,17 +13,12 @@ namespace Inventarys.View
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _quantityText;
 
-        private readonly Color _colorEmpty = new Color(0, 0, 0, 0);
 
         private int _index;
-        private Color _startColor;
         private IReadOnlyInventorySlot _slot;
         private IItemService _itemService;
 
         public event Action<IReadOnlyInventorySlot, int> ClickSlot;
-
-        private void Start() =>
-            _startColor = _icon.color;
 
         private void OnDestroy() =>
             UnsubscribeFromSlotEvents();
@@ -53,7 +48,7 @@ namespace Inventarys.View
                 return;
             }
 
-            _icon.color = _startColor;
+            _icon.enabled = true;
             var item = _itemService.GetItem(idItem);
             UpdateSlot(item.Icon);
         }
@@ -81,7 +76,7 @@ namespace Inventarys.View
         {
             _quantityText.text = string.Empty;
             _icon.sprite = null;
-            _icon.color = _colorEmpty;
+            _icon.enabled = false;  
         }
 
         private void SubscribeToSlotEvents()
