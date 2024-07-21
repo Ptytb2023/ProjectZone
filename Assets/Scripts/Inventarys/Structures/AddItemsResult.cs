@@ -8,7 +8,7 @@ namespace Inventorys.Structures
         public readonly int AmountToAdd;
         public readonly int AmountAdded;
 
-        public int Remains => AmountToAdd - AmountAdded;
+        public int Remains => AmountAdded > 0 ? AmountToAdd - AmountAdded : 0;
 
         public AddItemsResult(string itemId, int amountToAdd, int amountAdded)
         {
@@ -24,7 +24,7 @@ namespace Inventorys.Structures
             AmountAdded = amountAdded;
         }
 
-        public override string ToString() => 
+        public override string ToString() =>
             $"ID:{ItemId}, AmountToAdd: {AmountToAdd}, AmountAdded: {AmountAdded}";
     }
 }

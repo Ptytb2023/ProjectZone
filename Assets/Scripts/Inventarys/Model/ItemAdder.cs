@@ -31,12 +31,12 @@ namespace Inventarys.Model
 
             foreach (var (slotId, slot) in _slotBySlotId)
             {
-                if (slot.CanPlaceItemInSlot(item))
+                if (!slot.CanPlaceItemInSlot(item))
                     continue;
 
                 var addItemResult = AddItem(slot, item, remainingAmountToAdd);
 
-                remainingAmountToAdd -= addItemResult.Remains;
+                remainingAmountToAdd -= addItemResult.AmountAdded;
                 totalAdded += addItemResult.AmountAdded;
 
                 if (remainingAmountToAdd <= 0)
