@@ -60,5 +60,6 @@ namespace Inventorys.Slot
             if (string.IsNullOrEmpty(_itemId.Value))
                 throw new NullReferenceException("Cannot set amount if the object does not contain an itemID");
         }
+
     }
 }

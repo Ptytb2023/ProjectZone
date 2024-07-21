@@ -6,19 +6,20 @@ using System;
 
 namespace Shooting
 {
-    public class WeaponSystem : MonoBehaviour
+    public class WeaponSystem : MonoBehaviour, IWeaponSystem
     {
         [SerializeField] private Transform _gunParent;
 
-        private IGun _currentWeapon;
+        private IWeapon _currentWeapon;
         private IInputService _inputService;
 
         private ShootingRate _shootingRate = new ShootingRate();
+        private Action Reloading;
 
-        [Inject]    
+        [Inject]
         private void Construct(IInputService inputService) =>
             _inputService = inputService;
-    
+
         private void OnEnable() =>
             _inputService.PressedShoot += OnPressedShoot;
 
@@ -26,33 +27,43 @@ namespace Shooting
             _inputService.PressedShoot -= OnPressedShoot;
 
 
-        public void EquipWeapon(IGun gun)
+        public void EquipWeapon(IWeapon weapon)
         {
-            if (gun is null)
-                throw new NullReferenceException($"the passed parameter {nameof(gun)} is missing null");
+            if (weapon == null)
+                throw new ArgumentNullException(nameof(weapon), "The weapon cannot be null.");
 
             DeactivateCurrentWeapon();
+            _currentWeapon = weapon;
 
-            _currentWeapon = gun;
-            _currentWeapon.AmmoChanged.Subscribe(OnAmmoChanged);
+            if (_currentWeapon is IGun gun)
+            {
+                gun.AmmoChanged.Subscribe(HandleAmmoChanged);
+                Reloading += gun.Reload;
+            }
+
             _shootingRate.SetShotsPerSecond(_currentWeapon.Settings.ShotsPerSecond);
         }
 
         private void DeactivateCurrentWeapon()
         {
-            if (_currentWeapon is null)
+            if (_currentWeapon == null)
                 return;
 
             _currentWeapon.SetActive(false);
-            _currentWeapon.AmmoChanged.Unsubscribe(OnAmmoChanged);
+
+            if (_currentWeapon is IGun gun)
+            {
+                gun.AmmoChanged.Unsubscribe(HandleAmmoChanged);
+                Reloading -= gun.Reload;
+            }
         }
 
-        private void OnAmmoChanged(int count)
+        private void HandleAmmoChanged(int count)
         {
             if (count > 0)
                 return;
 
-            _currentWeapon.Reload();
+            Reloading?.Invoke();
         }
 
         private void OnPressedShoot() =>
