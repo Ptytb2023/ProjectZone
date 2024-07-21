@@ -12,24 +12,37 @@ namespace Inventarys.View
 
         private List<InventorySlotView> _slots;
 
-        public event Action<int> ClickSlot;
+        public event Action<IReadOnlyInventorySlot, int> ClickSlot;
 
-        public void Init(InventorySlot[] slots)
+
+        private void OnEnable()
+        {
+            if (_slots is null)
+                return;
+
+            foreach (var slot in _slots)
+                slot.ClickSlot += OnClickSlot;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var slot in _slots)
+                slot.ClickSlot -= OnClickSlot;
+        }
+
+        public void Init(IReadOnlyInventorySlot[] slots)
         {
             for (int i = 0; i < slots.Length; i++)
             {
                 InventorySlotView slotView = Instantiate(_prefabInventorySlot, _contentPanel);
 
                 slotView.SetSlot(slots[i], i);
-                slotView.ClickSlot += ClickSlot;
+                slotView.ClickSlot += OnClickSlot;
                 _slots.Add(slotView);
             }
         }
 
-        private void OnDestroy()
-        {
-            foreach (var slot in _slots)
-                slot.ClickSlot -= ClickSlot;
-        }
+        private void OnClickSlot(IReadOnlyInventorySlot slot, int index) =>
+            ClickSlot?.Invoke(slot, index);
     }
 }

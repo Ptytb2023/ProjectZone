@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Inventarys.View
 {
-    public class ItemActionMenu : MonoBehaviour
+    public class InventoryActionMenu : MonoBehaviour
     {
         [SerializeField] private PanelRemoveItem _panelRemoveItem;
         [SerializeField] private Button _buttonOpenPanelRemoveItem;
@@ -15,27 +15,26 @@ namespace Inventarys.View
         [SerializeField] private Button _buttonUseItem;
 
         private IReadOnlyInventorySlot _slot;
-        private IItemService _itemService;
 
-        private bool IsUsableItem => _itemService.GetItem(_slot.ItemId.GetValue()).IsUsable;
+        private int _indexSlot;
         private string ItemId => _slot.ItemId.GetValue();
 
-        public event Action<string> ClickDropItem;
-        public event Action<string> ClickUseItem;
+        public event Action<IReadOnlyInventorySlot> ClickDropItem;
+        public event Action<IReadOnlyInventorySlot> ClickUseItem;
 
-        public event Action<string, int> RequestRemove;
+        public event Action<IReadOnlyInventorySlot, int> RequestRemove;
 
         private void OnDisable() => 
             UnsubscribeFromButtons();
 
-        public void SetSlot(IReadOnlyInventorySlot slot)
+        public void SetSlot(IReadOnlyInventorySlot slot,bool isUsabelItem)
         {
             _slot = slot;
 
             _buttonOpenPanelRemoveItem.onClick.AddListener(OnClickOpenRemovePanel);
             _buttonDropItem.onClick.AddListener(OnClickDrop);
 
-            if (!IsUsableItem)
+            if (!isUsabelItem)
                 return;
 
             _buttonUseItem.gameObject.SetActive(true);
@@ -50,15 +49,15 @@ namespace Inventarys.View
         }
 
         private void OnClickDrop() =>
-            ClickDropItem?.Invoke(ItemId);
+            ClickDropItem?.Invoke(_slot);
 
         private void OnClickUseItem() =>
-            ClickUseItem?.Invoke(ItemId);
+            ClickUseItem?.Invoke(_slot);
 
         private void OnClickRemoveItem(int amount)
         {
             _panelRemoveItem.ClickRemove -= OnClickRemoveItem;
-            RequestRemove?.Invoke(ItemId, amount);
+            RequestRemove?.Invoke(_slot, amount);
         }
 
         private void UnsubscribeFromButtons()

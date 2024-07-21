@@ -20,7 +20,7 @@ namespace Inventarys.View
         private IReadOnlyInventorySlot _slot;
         private IItemService _itemService;
 
-        public event Action<int> ClickSlot;
+        public event Action<IReadOnlyInventorySlot, int> ClickSlot;
 
         private void Start() =>
             _startColor = _icon.color;
@@ -43,7 +43,7 @@ namespace Inventarys.View
         }
 
         public void OnPointerDown(PointerEventData eventData) =>
-            ClickSlot?.Invoke(_index);
+            ClickSlot?.Invoke(_slot, _index);
 
         private void OnChangeIdItem(string idItem)
         {
