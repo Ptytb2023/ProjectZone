@@ -21430,6 +21430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1767825185}
   - component: {fileID: 1767825184}
+  - component: {fileID: 1767825186}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -21450,7 +21451,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1767825186}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -21483,6 +21485,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1767825186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767825183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f57b65b51b523446aea58d3a54ddad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryView: {fileID: 6087684664021651067, guid: ffb956206ad17d647a47f69d41a11f05, type: 3}
 --- !u!1 &1853783958
 GameObject:
   m_ObjectHideFlags: 0
@@ -28878,6 +28893,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5591913317583695201, guid: c1c83a7bde31f3f468152b76f58f9271, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2558030720306338351}
+    - targetCorrespondingSourceObject: {fileID: 5591913317583695201, guid: c1c83a7bde31f3f468152b76f58f9271, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2558030720306338352}
   m_SourcePrefab: {fileID: 100100000, guid: c1c83a7bde31f3f468152b76f58f9271, type: 3}
 --- !u!1 &2558030720306338347 stripped
 GameObject:
@@ -28942,6 +28960,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunParent: {fileID: 1685439438}
+--- !u!114 &2558030720306338352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558030720306338347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef5eb2a2ef30aa45946a1d8f011600b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerProggresStartGame:
+    <Size>k__BackingField: 4
+    <Slots>k__BackingField:
+    - <ItemId>k__BackingField: 23
+      <Amount>k__BackingField: 1
+    - <ItemId>k__BackingField: 88
+      <Amount>k__BackingField: 30
+    - <ItemId>k__BackingField: 88
+      <Amount>k__BackingField: 30
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
 --- !u!1 &3920014886001586373
 GameObject:
   m_ObjectHideFlags: 0
