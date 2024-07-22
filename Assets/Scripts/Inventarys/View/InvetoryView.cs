@@ -1,13 +1,11 @@
-﻿using Inventarys.View;
-using Inventorys.Slot;
+﻿using Inventorys.Slot;
 using ItemSystem;
 using Services;
-using Services.Input;
 using System;
 using UnityEngine;
 using Zenject;
 
-namespace Inventarys
+namespace Inventarys.View
 {
     public class InvetoryView : MonoBehaviour, IInvetoryView
     {
