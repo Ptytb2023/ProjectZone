@@ -8,4 +8,5 @@ namespace Inventorys.Slot
         public IReadOnlyReactiveProperty<int> Amount { get; }
         public IReadOnlyReactiveProperty<string> ItemId { get; }
     }
+
 }

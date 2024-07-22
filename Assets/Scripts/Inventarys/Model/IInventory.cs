@@ -3,7 +3,7 @@ using Inventorys.Structures;
 
 namespace Inventarys.Model
 {
-    public interface IInventory :  IExpandableInventory , IReadOnlyInventory
+    public interface IInventory : IExpandableInventory, IReadOnlyInventory
     {
         bool TryGetSlotIndexByItemId(string itemId, out int slotIndex);
     }
@@ -12,13 +12,13 @@ namespace Inventarys.Model
 
     public interface IItemRemover
     {
-        RemoveItemResult RemoveItem(int slotIndex, int count);
-        RemoveItemResult RemoveItem(IInventoryItem item, int count);
+        RemoveItemResult RemoveItem(int slotIndex, int count = 1);
+        RemoveItemResult RemoveItem(IInventoryItem item, int count = 1);
     }
 
     public interface IItemAdder
     {
-        AddItemsResult AddItem(int slotIndex, IInventoryItem item, int count);
-        AddItemsResult AddItem(IInventoryItem item, int count);
+        AddItemsResult AddItem(int slotIndex, IInventoryItem item, int count = 1);
+        AddItemsResult AddItem(IInventoryItem item, int count = 1);
     }
 }
