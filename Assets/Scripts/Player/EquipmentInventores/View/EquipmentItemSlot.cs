@@ -1,11 +1,14 @@
 ﻿using ItemSystem.Items.Equipments;
+using Player.EquipmentInventores.Slot;
+using Services;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Player.EquipmentInventores
 {
     [RequireComponent(typeof(Image))]
-    public class EquipmentItemSlot : MonoBehaviour
+    public class EquipmentItemSlot : MonoBehaviour, IEquipmentItemSlot
     {
         [SerializeField] private EquipmentType _equipmentType;
 
@@ -13,12 +16,8 @@ namespace Player.EquipmentInventores
 
         public EquipmentType Type => _equipmentType;
 
-        private void Awake()
-        {
+        private void Awake() =>
             _image = GetComponent<Image>();
-
-            ResetIcon();
-        }
 
         public void SetIcon(Sprite icon)
         {

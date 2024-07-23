@@ -1,65 +1,28 @@
 ﻿using ItemSystem.Items.Equipments;
-using Player.EquipmentInventores.Model;
-using System;
+using Player.EquipmentInventores.Slot;
+using Services;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Player.EquipmentInventores
 {
     public class InventoryEquipmentView : MonoBehaviour, IInventoryEquipmentView
     {
-        [SerializeField] private List<EquipmentItemSlot> _itemIcons;
+        [SerializeField] private List<EquipmentItemSlot> _slots;
 
-        private Dictionary<EquipmentType, EquipmentItemSlot> _icons;
-        private IInventoryEquipment _inventoryEquipment;
-
-        private void Awake()
+        public void SetIcon(ItemEquipment item)
         {
-            _icons = new Dictionary<EquipmentType, EquipmentItemSlot>();
+            IEnumerable<EquipmentItemSlot> slots = _slots.Where(x => x.Type == item.EquipmentType);
 
-            foreach (var icon in _itemIcons)
-                _icons.Add(icon.Type, icon);
+            foreach (var slot in slots)
+                slot.SetIcon(item.Icon);
         }
 
-        private void OnDestroy()
+        public void ResetAllSlots()
         {
-            if (_inventoryEquipment is null)
-                return;
-
-            _inventoryEquipment.ChangedEquipment -= OnChangedEquipment;
-        }
-
-        public void Init(IInventoryEquipment inventoryEquipment)
-        {
-            if (_inventoryEquipment is not null)
-                throw new InvalidOperationException("Inventory equipment is already set.");
-
-            _inventoryEquipment = inventoryEquipment;
-            InitializeItemIcons();
-
-            _inventoryEquipment.ChangedEquipment += OnChangedEquipment;
-        }
-
-        public void SetIcon(EquipmentType type, Sprite icon) =>
-            _icons[type].SetIcon(icon);
-
-        public void ResetAllIcon()
-        {
-            if (_icons is null)
-                return;
-
-            foreach (var item in _icons.Values)
-                item.ResetIcon();
-        }
-      
-
-        private void OnChangedEquipment(EquipmentType type, ItemEquipment item) =>
-            SetIcon(type, item.Icon);
-
-        private void InitializeItemIcons()
-        {
-            foreach (var item in _inventoryEquipment.ItemEquipments)
-                SetIcon(item.EquipmentType, item.Icon);
+            foreach (var slot in _slots)
+                slot.ResetIcon();
         }
     }
 }

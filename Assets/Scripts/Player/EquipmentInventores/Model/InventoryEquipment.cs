@@ -1,6 +1,7 @@
-﻿using Inventarys;
-using Inventarys.Model;
+﻿using EquipmentInventores.Structures;
 using ItemSystem.Items.Equipments;
+using Player.EquipmentInventores.Data;
+using Player.EquipmentInventores.Slot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,38 +11,33 @@ namespace Player.EquipmentInventores.Model
 {
     public class InventoryEquipment : IInventoryEquipment
     {
-        private InventoryController _inventory;
-        private Dictionary<EquipmentType, ItemEquipment> _slots;
+        private Dictionary<EquipmentType, InventoryEquipmentSlot> _slots;
+        public IInventoryEquipmentSlot[] EquipmentsSlots => _slots.Values.ToArray();
 
-        public ItemEquipment[] ItemEquipments => _slots.Values.ToArray();
 
-        public event Action<EquipmentType, ItemEquipment> ChangedEquipment;
-
-        public InventoryEquipment(List<ItemEquipment> data)
+        public InventoryEquipment(List<InventoryEquipmentSlotData> data)
         {
-            _slots = new Dictionary<EquipmentType, ItemEquipment>();
+            _slots = new Dictionary<EquipmentType, InventoryEquipmentSlot>();
 
             foreach (var item in data)
-                _slots.Add(item.EquipmentType, item);
+            {
+                if (_slots.ContainsKey(item.Type))
+                    throw new ArgumentException();
+
+                var slot = new InventoryEquipmentSlot(item.itemId, item.Type);
+                _slots.Add(slot.Type, slot);
+            }
         }
 
-        public void Initilize(InventoryController inventoryController) =>
-            _inventory = inventoryController;
-
-        public bool TryСlothe(ItemEquipment item)
+        public ReplaceItemResult ReplaceItem(EquipmentType type, string itemId)
         {
-            var result = _inventory.AddItem(item);
+            if (!(_slots.TryGetValue(type, out var slot)))
+                return new ReplaceItemResult(itemId, null, false);
 
-            if (result.AmountAdded <= 0)
-                return false;
+            var itemIdRemoved = slot.ItemID;
+            slot.SetSlot(itemId);
 
-            EquipmentType type = item.EquipmentType;
-            _slots[type] = item;
-
-            ChangedEquipment?.Invoke(type, item);
-
-            return true;
+            return new ReplaceItemResult(itemIdRemoved, itemId, true);
         }
-
     }
 }

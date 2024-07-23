@@ -7,7 +7,7 @@ namespace Services.Input
 {
     public class MobileInputService : IInputService, IDisposable
     {
-        private readonly PlayerInputMobile _inputModel;
+        private readonly PlayerInputView _inputModel;
 
         public Vector2 Axis => GetAxisByJoystick();
 
@@ -16,7 +16,7 @@ namespace Services.Input
         public event Action PressedShoot;
         public event Action PressedOpenInventory;
 
-        public MobileInputService(PlayerInputMobile playerInput)
+        public MobileInputService(PlayerInputView playerInput)
         {
             if (playerInput is null)
                 throw new ArgumentNullException(nameof(playerInput));

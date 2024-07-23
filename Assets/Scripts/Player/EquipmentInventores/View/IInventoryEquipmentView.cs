@@ -1,13 +1,14 @@
 ﻿using ItemSystem.Items.Equipments;
-using Player.EquipmentInventores.Model;
-using UnityEngine;
 
 namespace Player.EquipmentInventores
 {
-    public interface IInventoryEquipmentView
+    public interface IInventoryEquipmentView : IEuipmentView
     {
-        void Init(IInventoryEquipment inventoryEquipment);
-        void ResetAllIcon();
-        void SetIcon(EquipmentType type, Sprite icon);
+    }
+
+    public interface IEuipmentView
+    {
+        void SetIcon(ItemEquipment item);
+        void ResetAllSlots();
     }
 }

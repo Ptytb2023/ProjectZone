@@ -7,7 +7,7 @@ namespace Services
     {
         bool ContainsItem(string itemId);
         IItem GetItem(string itemId);
-        bool TryUseItem(string itemId, GameObject gameObject);
+        T GetItem<T>(string itemId) where T : IItem;
     }
 }
 

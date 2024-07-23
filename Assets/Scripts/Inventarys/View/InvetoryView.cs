@@ -3,12 +3,14 @@ using ItemSystem;
 using Services;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Inventarys.View
 {
     public class InvetoryView : MonoBehaviour, IInvetoryView
     {
+        [SerializeField] private Button _buttonClose;
         [SerializeField] private InventoryPage _inventoryPage;
         [SerializeField] private InventoryDescriptionItem _inventoryDescription;
         [SerializeField] private InventoryActionMenu _inventoryActionMenu;
@@ -24,7 +26,7 @@ namespace Inventarys.View
         private void Construct(IItemService itemService) =>
             _itemService = itemService;
 
-        public void Init(IReadOnlyInventorySlot[] slots) => 
+        public void Init(IReadOnlyInventorySlot[] slots) =>
             _inventoryPage.Init(slots);
 
         private void OnEnable()
@@ -34,6 +36,8 @@ namespace Inventarys.View
             _inventoryActionMenu.ClickDropItem += OnClickDrop;
             _inventoryActionMenu.ClickUseItem += OnClickUseItem;
             _inventoryActionMenu.RequestRemove += OnRequestRemove;
+
+         _buttonClose.onClick.AddListener(CloseInventory);   
         }
 
         private void OnDisable()
@@ -45,17 +49,26 @@ namespace Inventarys.View
             _inventoryActionMenu.RequestRemove -= OnRequestRemove;
 
             _inventoryActionMenu.gameObject.SetActive(false);
+
+            _buttonClose.onClick.RemoveListener(CloseInventory);
         }
 
         public void OpenInventory() =>
             gameObject.SetActive(true);
 
-        public void CloseInventory() =>
+        public void CloseInventory() => 
             gameObject.SetActive(false);
 
         private void OnClickInventorySlot(IReadOnlyInventorySlot slot, int index)
         {
             _currentIndexSelectedSlot = index;
+
+            if (slot.IsEmpty)
+            {
+                _inventoryDescription.ResetParametrs();
+                _inventoryActionMenu.gameObject.SetActive(false);
+                return;
+            }
 
             IItem item = _itemService.GetItem(slot.ItemId.GetValue());
 

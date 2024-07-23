@@ -32,17 +32,14 @@ namespace Services
             return item;
         }
 
-        public bool ContainsItem(string itemId) =>
-            _items.ContainsKey(itemId);
-
-        public bool TryUseItem(string itemId, GameObject gameObject)
+        public T GetItem<T>(string itemId) where T : IItem
         {
             var item = GetItem(itemId);
 
-            if (item is IUsabelItem usabelItem)
-                return usabelItem.TryUseItem(gameObject);
-
-            return false;
+            return (T)item;
         }
+
+        public bool ContainsItem(string itemId) =>
+            _items.ContainsKey(itemId);
     }
 }

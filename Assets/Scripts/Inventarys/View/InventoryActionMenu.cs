@@ -24,6 +24,9 @@ namespace Inventarys.View
 
         public event Action<IReadOnlyInventorySlot, int> RequestRemove;
 
+        private void OnEnable() => 
+            Subscribe();
+
         private void OnDisable() => 
             UnsubscribeFromButtons();
 
@@ -31,21 +34,19 @@ namespace Inventarys.View
         {
             _slot = slot;
 
-            _buttonOpenPanelRemoveItem.onClick.AddListener(OnClickOpenRemovePanel);
-            _buttonDropItem.onClick.AddListener(OnClickDrop);
-
             if (!isUsabelItem)
+            {
+                _buttonUseItem.gameObject.SetActive(false);
                 return;
+            }
 
             _buttonUseItem.gameObject.SetActive(true);
-            _buttonUseItem.onClick.AddListener(OnClickDrop);
         }
 
         private void OnClickOpenRemovePanel()
         {
             int maxRemove = _slot.Amount.GetValue();
             _panelRemoveItem.SetMaxRemoveAndOpenPanel(maxRemove);
-            _panelRemoveItem.ClickRemove += OnClickRemoveItem;
         }
 
         private void OnClickDrop() =>
@@ -54,17 +55,23 @@ namespace Inventarys.View
         private void OnClickUseItem() =>
             ClickUseItem?.Invoke(_slot);
 
-        private void OnClickRemoveItem(int amount)
-        {
-            _panelRemoveItem.ClickRemove -= OnClickRemoveItem;
+        private void OnClickRemoveItem(int amount) => 
             RequestRemove?.Invoke(_slot, amount);
+
+        private void Subscribe()
+        {
+            _panelRemoveItem.ClickRemove += OnClickRemoveItem;
+
+            _buttonOpenPanelRemoveItem.onClick.AddListener(OnClickOpenRemovePanel);
+            _buttonDropItem.onClick.AddListener(OnClickDrop);
+            _buttonUseItem.onClick.AddListener(OnClickUseItem);
         }
 
         private void UnsubscribeFromButtons()
         {
             _buttonOpenPanelRemoveItem.onClick.RemoveListener(OnClickOpenRemovePanel);
             _buttonDropItem.onClick.RemoveListener(OnClickDrop);
-            _buttonUseItem.onClick.RemoveListener(OnClickDrop);
+            _buttonUseItem.onClick.RemoveListener(OnClickUseItem);
 
             _panelRemoveItem.ClickRemove -= OnClickRemoveItem;
 

@@ -1,16 +1,13 @@
-﻿using Inventarys;
+﻿using EquipmentInventores.Structures;
 using ItemSystem.Items.Equipments;
-using System;
+using Player.EquipmentInventores.Slot;
 
 namespace Player.EquipmentInventores.Model
 {
     public interface IInventoryEquipment
     {
-        ItemEquipment[] ItemEquipments { get; }
+        IInventoryEquipmentSlot[] EquipmentsSlots { get; }
 
-        event Action<EquipmentType, ItemEquipment> ChangedEquipment;
-
-        bool TryСlothe(ItemEquipment item);
-        void Initilize(InventoryController inventoryController);
+        ReplaceItemResult ReplaceItem(EquipmentType type, string itemId);
     }
 }

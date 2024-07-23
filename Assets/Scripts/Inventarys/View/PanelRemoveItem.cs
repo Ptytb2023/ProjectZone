@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,10 +46,16 @@ namespace Inventarys.View
         {
             if (value <= 0)
                 throw new ArgumentOutOfRangeException($"{value} not be less than or equal to 0");
-
-            _sliderForToRemoveItems.maxValue = value;
+            UpdateValue(value);
 
             gameObject.SetActive(true);
+        }
+
+        private void UpdateValue(int value)
+        {
+            _sliderForToRemoveItems.maxValue = value;
+            OnSliderValueChange(value / 2);
+            _sliderForToRemoveItems.value = value / 2;
         }
 
         private void OnValidate()

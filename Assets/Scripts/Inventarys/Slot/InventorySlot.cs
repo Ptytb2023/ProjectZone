@@ -21,9 +21,6 @@ namespace Inventorys.Slot
 
         public InventorySlot(InventorySlotData data)
         {
-            if (string.IsNullOrEmpty(data.ItemId) || data.Amount <= 0)
-                throw new ArgumentOutOfRangeException(nameof(data.Amount));
-
             _amount = new ReactiveProperty<int>(data.Amount);
             _itemId = new ReactiveProperty<string>(data.ItemId);
         }

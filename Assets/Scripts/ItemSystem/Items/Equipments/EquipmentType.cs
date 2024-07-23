@@ -4,15 +4,9 @@
     {
         Headwear,
         Body,
-        LeftShoulder,
-        RightShoulder,
-
-        LeftForearm,
-        RightForearm,
-
-        LeftLeg,
-        RightLeg,
-
+        Shoulder,
+        Forearm,
+        Leg,
         Weapon
     }
 }

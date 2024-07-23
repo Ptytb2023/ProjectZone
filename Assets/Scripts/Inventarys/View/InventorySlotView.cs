@@ -13,12 +13,13 @@ namespace Inventarys.View
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _quantityText;
 
-
-        private int _index;
-        private IReadOnlyInventorySlot _slot;
         private IItemService _itemService;
 
-        public event Action<IReadOnlyInventorySlot, int> ClickSlot;
+        public int Index { get; private set; }
+        public IReadOnlyInventorySlot InveltorySlot { get; private set; }
+
+        public event Action<InventorySlotView> ClickSlot;
+
 
         private void OnDestroy() =>
             UnsubscribeFromSlotEvents();
@@ -31,14 +32,21 @@ namespace Inventarys.View
             if (slot is null)
                 throw new ArgumentNullException(nameof(slot));
 
-            _index = index;
-            _slot = slot;
+            Index = index;
+            InveltorySlot = slot;
 
             SubscribeToSlotEvents();
         }
 
         public void OnPointerDown(PointerEventData eventData) =>
-            ClickSlot?.Invoke(_slot, _index);
+            ClickSlot?.Invoke(this);
+
+        public void ResetSlot()
+        {
+            _quantityText.text = string.Empty;
+            _icon.sprite = null;
+            _icon.enabled = false;
+        }
 
         private void OnChangeIdItem(string idItem)
         {
@@ -72,26 +80,21 @@ namespace Inventarys.View
             _quantityText.text = ammount.ToString();
         }
 
-        public void ResetSlot()
-        {
-            _quantityText.text = string.Empty;
-            _icon.sprite = null;
-            _icon.enabled = false;  
-        }
+       
 
         private void SubscribeToSlotEvents()
         {
-            _slot.ItemId.SubscribeAndUpdate(OnChangeIdItem);
-            _slot.Amount.SubscribeAndUpdate(OnChangeAmount);
+            InveltorySlot.ItemId.SubscribeAndUpdate(OnChangeIdItem);
+            InveltorySlot.Amount.SubscribeAndUpdate(OnChangeAmount);
         }
 
         private void UnsubscribeFromSlotEvents()
         {
-            if (_slot is null)
+            if (InveltorySlot is null)
                 return;
 
-            _slot.ItemId.Unsubscribe(OnChangeIdItem);
-            _slot.Amount.Unsubscribe(OnChangeAmount);
+            InveltorySlot.ItemId.Unsubscribe(OnChangeIdItem);
+            InveltorySlot.Amount.Unsubscribe(OnChangeAmount);
         }
     }
 }

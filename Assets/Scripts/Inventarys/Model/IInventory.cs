@@ -5,6 +5,7 @@ namespace Inventarys.Model
 {
     public interface IInventory : IExpandableInventory, IReadOnlyInventory
     {
+        string GetItemIdInSlot(int idSlot);
         bool TryGetSlotIndexByItemId(string itemId, out int slotIndex);
     }
 

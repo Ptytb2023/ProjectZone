@@ -1,57 +1,107 @@
 ﻿using Inventarys;
+using Inventarys.Model;
+using ItemSystem;
 using ItemSystem.Item;
 using ItemSystem.Items.Equipments;
 using Lean.Pool;
 using Player.EquipmentInventores.Model;
+using Services;
 using Shooting;
 using UnityEngine;
 using Zenject;
 
 namespace Player.EquipmentInventores
 {
-    public class InventoryEquipmentController : MonoBehaviour, IInventoryEquipmentController
+    public class InventoryEquipmentController : MonoBehaviour
     {
+        [SerializeField] private Transform _weaponPoint;
         [SerializeField] private CharacterAppearanceController _apperanceController;
         [SerializeField] private WeaponSystem _weaponSystem;
         [SerializeField] private InventoryController _inventoryController;
 
-        private ItemWeapon _currentWeaponItem;
+
+        private IItemService _itemService;
         private IInventoryEquipmentView _inventoryView;
         private IInventoryEquipment _inventoryEquipment;
 
         [Inject]
-        private void Construct(IInventoryEquipment inventoryEquipment) =>
-            _inventoryEquipment = inventoryEquipment;
-
-        private void Awake()
+        private void Construct(IInventoryEquipment inventoryEquipment,
+                               IInventoryEquipmentView inventoryEquipmentView,
+                               IItemService itemService)
         {
-            _inventoryEquipment.Initilize(_inventoryController);
-            _inventoryView.Init(_inventoryEquipment);
-            _apperanceController.Init(_inventoryEquipment);
+            _itemService = itemService;
+            _inventoryView = inventoryEquipmentView;
+            _inventoryEquipment = inventoryEquipment;
         }
 
-        private void OnEnable() => 
-            _inventoryEquipment.ChangedEquipment += OnChangedEquipment;
+        private void Start() =>
+            Initilize();
 
-        private void OnDisable() => 
-            _inventoryEquipment.ChangedEquipment -= OnChangedEquipment;
+        private void OnEnable() =>
+            _inventoryController.RequestUseItemInSlot += OnRequestUseItemInSlot;
 
-        public bool TrySetEquipment(ItemEquipment equipment) => 
-            _inventoryEquipment.TryСlothe(equipment);
+        private void OnDisable() =>
+            _inventoryController.RequestUseItemInSlot -= OnRequestUseItemInSlot;
 
-
-        public void OnChangedEquipment(EquipmentType type, ItemEquipment item)
+        private void Initilize()
         {
-            if (!(type == EquipmentType.Weapon))
+            foreach (var slot in _inventoryEquipment.EquipmentsSlots)
+            {
+                if (slot.isEmpty)
+                    continue;
+
+                ItemEquipment item = _itemService.GetItem<ItemEquipment>(slot.ItemID);
+                UpdateView(item);
+
+                if (slot.Type == EquipmentType.Weapon)
+                    EquipWeapon((ItemWeapon)item);
+            }
+        }
+
+        private void OnRequestUseItemInSlot(string itemId)
+        {
+            var item = _itemService.GetItem(itemId);
+
+            if (!(item.Type == ItemType.Equipment))
                 return;
 
-            if (_currentWeaponItem is not null)
-                LeanPool.Despawn(_currentWeaponItem.Weapon);
+            var itemEquipment = _itemService.GetItem<ItemEquipment>(itemId);
 
-            var weaponObject = LeanPool.Spawn(_currentWeaponItem.Weapon);
-            weaponObject.transform.SetParent(_apperanceController.WeaponPoint);
-
-            _weaponSystem.EquipWeapon(weaponObject);
+            ReplaceEquipment(itemEquipment);
         }
+
+        private void ReplaceEquipment(ItemEquipment item)
+        {
+            var result = _inventoryEquipment.ReplaceItem(item.EquipmentType, item.Id);
+
+            if (!result.IsSuccess)
+                return;
+
+            UpdateView(item);
+            SwapItems(item, result.ItemIdRemove);
+
+            if (item.EquipmentType == EquipmentType.Weapon)
+                EquipWeapon((ItemWeapon)item);
+        }
+
+        private void UpdateView(ItemEquipment itemEquipment)
+        {
+            _inventoryView.SetIcon(itemEquipment);
+            _apperanceController.SetIcon(itemEquipment);
+        }
+
+        private void SwapItems(ItemEquipment newItem, string removedItemId)
+        {
+            _inventoryController.RemoveItem(newItem);
+
+            if (string.IsNullOrEmpty(removedItemId))
+                return;
+
+            var itemRemoved = _itemService.GetItem(removedItemId);
+            _inventoryController.AddItem(newItem);
+        }
+
+        private void EquipWeapon(ItemWeapon weapon) => 
+            _weaponSystem.EquipWeapon(weapon.Weapon);
     }
 }

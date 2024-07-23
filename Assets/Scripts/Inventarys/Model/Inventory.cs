@@ -4,6 +4,7 @@ using Inventorys.Slot;
 using Inventorys.Structures;
 using System.Collections.Generic;
 using System.Linq;
+using Zenject;
 
 namespace Inventarys.Model
 {
@@ -21,7 +22,8 @@ namespace Inventarys.Model
         public event Action<string, int> ItemAdded;
         public event Action<string, int> ItemRemoved;
 
-        public Inventory(InvetoryData data)
+
+        public Inventory(InventoryData data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
             if (data.Slots == null) throw new ArgumentNullException(nameof(data.Slots));
@@ -56,6 +58,9 @@ namespace Inventarys.Model
         public bool ContainsItem(string itemId) =>
             InventorySlots.Any(x => x.ItemId.GetValue() == itemId);
 
+        public string GetItemIdInSlot(int idSlot) =>
+            _slots[idSlot].ItemId.GetValue();
+
         public bool TryGetSlotIndexByItemId(string itemId, out int slotId)
         {
             foreach (var (id, slot) in _slots)
@@ -71,13 +76,13 @@ namespace Inventarys.Model
             return false;
         }
 
-        public AddItemsResult AddItem(int slotId, IInventoryItem item, int count) =>
+        public AddItemsResult AddItem(int slotId, IInventoryItem item, int count = 1) =>
             AddItemInternal(slotId, item, count);
 
-        public AddItemsResult AddItem(IInventoryItem item, int count) =>
+        public AddItemsResult AddItem(IInventoryItem item, int count = 1) =>
             AddItemInternal(null, item, count);
 
-        private AddItemsResult AddItemInternal(int? slotId, IInventoryItem item, int count)
+        private AddItemsResult AddItemInternal(int? slotId, IInventoryItem item, int count = 1)
         {
             var result = slotId.HasValue
                 ? _itemAdder.AddItem(slotId.Value, item, count)
@@ -89,10 +94,10 @@ namespace Inventarys.Model
             return result;
         }
 
-        public RemoveItemResult RemoveItem(IInventoryItem item, int count) =>
+        public RemoveItemResult RemoveItem(IInventoryItem item, int count = 1) =>
             RemoveItemIterval(null, count, item);
 
-        public RemoveItemResult RemoveItem(int slotId, int count) =>
+        public RemoveItemResult RemoveItem(int slotId, int count = 1) =>
             RemoveItemIterval(slotId, count, null);
 
         private RemoveItemResult RemoveItemIterval(int? slotIndex, int count, IInventoryItem item)
@@ -101,8 +106,8 @@ namespace Inventarys.Model
                 ? _itemRemover.RemoveItem(slotIndex.Value, count)
                 : _itemRemover.RemoveItem(item, count);
 
-            if (result.Success)
-                TriggerItemRemoveEvent(item.Id, result);
+            //if (result.Success)
+            //    TriggerItemRemoveEvent(item.Id, result);
 
             return result;
         }

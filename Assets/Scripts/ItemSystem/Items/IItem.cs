@@ -12,9 +12,4 @@ namespace ItemSystem
         ItemType Type { get; }
         public bool IsUsable { get; }
     }
-
-    public interface IUsabelItem : IItem
-    {
-        bool TryUseItem(GameObject target);
-    }
 }
