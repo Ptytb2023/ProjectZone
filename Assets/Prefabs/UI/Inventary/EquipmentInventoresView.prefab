@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentType: 8
+  _equipmentType: 5
 --- !u!1 &791459511610708012
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentType: 3
+  _equipmentType: 2
 --- !u!1 &1205187441733088458
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentType: 4
+  _equipmentType: 3
 --- !u!1 &1494149936227374919
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentType: 6
+  _equipmentType: 4
 --- !u!1 &2610445402998707989
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentType: 5
+  _equipmentType: 3
 --- !u!1 &2690399849333149438
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentType: 7
+  _equipmentType: 4
 --- !u!1 &3141061468741031107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,14 +1136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfece745da93518449fd4475a2621420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemIcons:
+  _slots:
   - {fileID: 5034874453935866157}
   - {fileID: 6749381056902402851}
   - {fileID: 15491165775114272}
-  - {fileID: 1224712658048771739}
+  - {fileID: 4726025560137384294}
   - {fileID: 5669345273540679992}
   - {fileID: 5374028782260881987}
-  - {fileID: 4726025560137384294}
+  - {fileID: 1224712658048771739}
   - {fileID: 9083620795552906732}
   - {fileID: 8761643601983835850}
 --- !u!1 &4936534431618342678
@@ -1157,6 +1157,7 @@ GameObject:
   - component: {fileID: 8023107212474622117}
   - component: {fileID: 2072925655757259508}
   - component: {fileID: 6145212363796023960}
+  - component: {fileID: 1993314524247274882}
   m_Layer: 5
   m_Name: WeapoItem
   m_TagString: Untagged
@@ -1222,6 +1223,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1993314524247274882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4936534431618342678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b57c2e3bbedd047905f0d5a938db7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipmentType: 5
 --- !u!1 &6153861103765962250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,10 +1495,10 @@ RectTransform:
   - {fileID: 6521352878729457630}
   - {fileID: 6414190726247832999}
   - {fileID: 8449827226804742397}
-  - {fileID: 9025338501437989018}
+  - {fileID: 3124768891621206271}
   - {fileID: 2023997731731990278}
   - {fileID: 1449842697201063897}
-  - {fileID: 3124768891621206271}
+  - {fileID: 9025338501437989018}
   - {fileID: 447218933505918134}
   m_Father: {fileID: 615532799076209626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Inventarys
 {
-    public class InventoryController : MonoBehaviour, IInventoryController
+    public class InventoryController : IInventoryController
     {
         private IItemService _itemService;
         private IInputService _inputService;
@@ -21,21 +21,28 @@ namespace Inventarys
         public event Action<string> RequestUseItemInSlot;
 
         [Inject]
-        public void Construct(IInventory inventory, IInvetoryView view, IInputService inputService)
+        public InventoryController(IItemService itemService,
+                                   IInputService inputService,
+                                   IInvetoryView invetoryView,
+                                   IInventory inventory)
         {
-            _inventory = inventory;
-            _invetoryView = view;
+            _itemService = itemService;
             _inputService = inputService;
+            _invetoryView = invetoryView;
+            _inventory = inventory;
+
+            Initialization();
+            Subscriptions();
         }
 
-        private void Start() => 
-            Initialization();
+        public AddItemsResult AddItem(string idItem, int count = 1)
+        {
+            if (!(_itemService.ContainsItem(idItem)))
+                return new AddItemsResult(idItem, count, 0);
 
-        private void OnEnable() =>
-          Subscriptions();
-
-        private void OnDisable() =>
-          Unsubscribes();
+            var item = _itemService.GetItem(idItem);
+            return AddItem(item, count);
+        }
 
         public AddItemsResult AddItem(int slotIndex, IInventoryItem item, int count) =>
             _inventory.AddItem(slotIndex, item, count);
@@ -49,6 +56,26 @@ namespace Inventarys
         public RemoveItemResult RemoveItem(IInventoryItem item, int count = 1) =>
             _inventory.RemoveItem(item, count);
 
+        public RemoveItemResult RemoveItem(string idItem, int count = 1)
+        {
+            if (!(_itemService.ContainsItem(idItem)))
+                return new RemoveItemResult(idItem, 0, false);
+
+            var item = _itemService.GetItem(idItem);
+
+            return RemoveItem(item, count);
+        }
+
+        public RemoveItemResult RemoveAvailableItems(string idItem, int count = 1)
+        {
+            int availdCount = _inventory.GetItemAmount(idItem);
+
+            if (availdCount <= 0)
+                return new RemoveItemResult(idItem, count, false);
+
+            int remove = Mathf.Clamp(availdCount, count, availdCount);
+            return RemoveItem(idItem, remove);
+        }
 
         private void Initialization()
         {
@@ -75,7 +102,7 @@ namespace Inventarys
             var itemId = _inventory.GetItemIdInSlot(indexSlot);
             RequestUseItemInSlot?.Invoke(itemId);
         }
-     
+
         private void Subscriptions()
         {
             _inputService.PressedOpenInventory += OnPressedOpenInventory;
@@ -94,5 +121,7 @@ namespace Inventarys
             _invetoryView.RequestUseItemInSlot -= OnRequestUseItemInSlot;
         }
 
+        public void Dispose() => 
+            Unsubscribes();
     }
 }

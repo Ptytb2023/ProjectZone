@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1123720566019637963}
   - component: {fileID: 994463545545613482}
   - component: {fileID: 7531031285081865182}
+  - component: {fileID: 6029815322780589885}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -91,3 +92,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32167f6ba6d0834f98407e600ca9695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6029815322780589885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8515303169376095511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78cfec1d040348449038b3268b88219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryDataMainStart:
+    <Size>k__BackingField: 23
+    <Slots>k__BackingField:
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 32
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 32
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 42
+    - <ItemId>k__BackingField: 102
+      <Amount>k__BackingField: 1
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 55
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+  _slotDataEquipment:
+  - <itemId>k__BackingField: 101
+    <Type>k__BackingField: 4
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 0
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 1
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 2
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 3
+  - <itemId>k__BackingField: 201
+    <Type>k__BackingField: 5

@@ -16,7 +16,6 @@ namespace Inventarys.View
 
         private IReadOnlyInventorySlot _slot;
 
-        private int _indexSlot;
         private string ItemId => _slot.ItemId.GetValue();
 
         public event Action<IReadOnlyInventorySlot> ClickDropItem;
@@ -28,11 +27,17 @@ namespace Inventarys.View
             Subscribe();
 
         private void OnDisable() => 
-            UnsubscribeFromButtons();
+            Unsubscribe();
 
         public void SetSlot(IReadOnlyInventorySlot slot,bool isUsabelItem)
         {
+            gameObject.SetActive(true);
+
+            if (_slot is not null)
+                _slot.Amount.Unsubscribe(OnChageAmmoInSlot);
+
             _slot = slot;
+            _slot.Amount.Subscribe(OnChageAmmoInSlot);
 
             if (!isUsabelItem)
             {
@@ -60,6 +65,9 @@ namespace Inventarys.View
 
         private void Subscribe()
         {
+            if (_slot is not null)
+                _slot.Amount.Subscribe(OnChageAmmoInSlot);
+
             _panelRemoveItem.ClickRemove += OnClickRemoveItem;
 
             _buttonOpenPanelRemoveItem.onClick.AddListener(OnClickOpenRemovePanel);
@@ -67,7 +75,7 @@ namespace Inventarys.View
             _buttonUseItem.onClick.AddListener(OnClickUseItem);
         }
 
-        private void UnsubscribeFromButtons()
+        private void Unsubscribe()
         {
             _buttonOpenPanelRemoveItem.onClick.RemoveListener(OnClickOpenRemovePanel);
             _buttonDropItem.onClick.RemoveListener(OnClickDrop);
@@ -76,6 +84,18 @@ namespace Inventarys.View
             _panelRemoveItem.ClickRemove -= OnClickRemoveItem;
 
             _buttonUseItem.gameObject.SetActive(false);
+
+            if (_slot is not null)
+                _slot.Amount.Unsubscribe(OnChageAmmoInSlot);
+        }
+
+        public void OnChageAmmoInSlot(int value)
+        {
+            if (value > 0)
+                return;
+
+            gameObject.SetActive(false);
+            _slot.Amount.Unsubscribe(OnChageAmmoInSlot);
         }
     }
 }

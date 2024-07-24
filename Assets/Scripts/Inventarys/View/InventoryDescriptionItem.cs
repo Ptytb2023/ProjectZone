@@ -1,4 +1,5 @@
-﻿using ItemSystem;
+﻿using Inventorys.Slot;
+using ItemSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ namespace Inventarys.View
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _nameItemText;
         [SerializeField] private TMP_Text _descriptionText;
+
+        private IReadOnlyInventorySlot _currentSlot;
 
         private void OnDisable() =>
             ResetParametrs();
