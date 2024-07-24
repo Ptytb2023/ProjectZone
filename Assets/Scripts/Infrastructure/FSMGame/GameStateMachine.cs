@@ -1,4 +1,6 @@
-﻿using Services.SceneLoaders;
+﻿using DataPersistence;
+using Services.Input;
+using Services.SceneLoaders;
 using System;
 using System.Collections.Generic;
 
@@ -10,14 +12,13 @@ namespace Infrastructure.FSMGame
 
         private IExitableState _activeState = new IExitableState.Empty();
 
-        public GameStateMachine(IServiceSceneLoader serviceSceneLoader)
+        public GameStateMachine(IServiceSceneLoader serviceSceneLoader, IInputService inputService)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(LoadLevelState)] = new LoadLevelState(serviceSceneLoader)
+                [typeof(LoadLevelState)] = new LoadLevelState(serviceSceneLoader, inputService)
             };
         }
-
 
         public void Enter<TState>() where TState : class, IState
         {

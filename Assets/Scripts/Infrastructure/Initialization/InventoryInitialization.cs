@@ -7,6 +7,7 @@ using Player.EquipmentInventores.Model;
 using Services;
 using Services.Save;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -25,29 +26,34 @@ namespace Infrastructure.Initialization
         private IItemService _itemService;
 
         [Inject]
-        private void Construct(ISaveLoadService saveService, DiContainer diContainer,IItemService itemService)
+        private void Construct(ISaveLoadService saveService, DiContainer diContainer, IItemService itemService)
         {
             _diContainer = diContainer;
             _saveService = saveService;
+            _itemService = itemService;
         }
 
-        private void Awake() => 
+        private void Awake() =>
             DontDestroyOnLoad(this);
+
+        private async void OnEnable()
+        {
+           await InitializeAsync();
+        }
 
         public async override Task InitializeAsync()
         {
+
             PlayerPorgress playerProgress = await _saveService.Load();
 
             if (playerProgress is null)
             {
-                BindInventory(_inventoryDataMainStart);
-                BindEquipmentInventory(_slotDataEquipment);
+                playerProgress = new PlayerPorgress(_inventoryDataMainStart, _slotDataEquipment.ToList());
+                await _saveService.Save(playerProgress);
             }
-            else
-            {
-                BindInventory(playerProgress.MainInvetory);
-                BindEquipmentInventory(playerProgress.InventoryEquipments.ToArray());
-            }
+
+            BindInventory(playerProgress.MainInvetory);
+            BindEquipmentInventory(playerProgress.InventoryEquipments.ToArray());
         }
 
         private void BindInventory(InventoryData data)
@@ -59,17 +65,7 @@ namespace Infrastructure.Initialization
 
         private void BindEquipmentInventory(InventoryEquipmentSlotData[] _slotDataEquipment)
         {
-
-            var items = new List<ItemEquipment>(maxEquipmentSlot);
-
-            foreach (var slotData in _slotDataEquipment)
-            {
-                var item = (ItemEquipment)_itemService.GetItem(slotData.IdItem);
-
-                items.Add(item);
-            }
-
-            IInventoryEquipment inventory = new InventoryEquipment(items);
+            IInventoryEquipment inventory = new InventoryEquipment(_slotDataEquipment.ToList());
 
             _diContainer.BindInterfacesAndSelfTo<InventoryEquipment>().FromInstance(inventory).AsSingle().NonLazy();
         }
