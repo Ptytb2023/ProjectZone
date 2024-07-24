@@ -129,9 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdb24afb1529374180c67f90feb2a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gunSettings:
+  <Settings>k__BackingField:
+    <ShotsPerSecond>k__BackingField: 3
+    <BaseDamage>k__BackingField: 6
+  GunSettings:
     <ShootPoint>k__BackingField: {fileID: 1908331199340104073}
-    <ProjectilePrefab>k__BackingField: {fileID: 8398804550523006249, guid: 728664e2e7b9cae478cd3f56b25b1636, type: 3}
-  _ammoReloadSettings:
-    <MaximumAmmo>k__BackingField: 30
-    <ReloadTime>k__BackingField: 3
+  AmmoReloadSettings:
+    <ItemIdBulelt>k__BackingField: 301
+    <MagazineSize>k__BackingField: 30
+    <ReloadTime>k__BackingField: 10
