@@ -1,9 +1,7 @@
 ﻿using Inventarys;
-using Inventarys.Model;
 using ItemSystem;
 using ItemSystem.Item;
 using ItemSystem.Items.Equipments;
-using Lean.Pool;
 using Player.EquipmentInventores.Model;
 using Services;
 using Shooting;
@@ -14,21 +12,21 @@ namespace Player.EquipmentInventores
 {
     public class InventoryEquipmentController : MonoBehaviour
     {
-        [SerializeField] private Transform _weaponPoint;
         [SerializeField] private CharacterAppearanceController _apperanceController;
         [SerializeField] private WeaponSystem _weaponSystem;
-        [SerializeField] private InventoryController _inventoryController;
-
 
         private IItemService _itemService;
         private IInventoryEquipmentView _inventoryView;
         private IInventoryEquipment _inventoryEquipment;
+        private IInventoryController _inventoryController;
 
         [Inject]
         private void Construct(IInventoryEquipment inventoryEquipment,
                                IInventoryEquipmentView inventoryEquipmentView,
-                               IItemService itemService)
+                               IItemService itemService,
+                               IInventoryController inventoryController)
         {
+            _inventoryController = inventoryController;
             _itemService = itemService;
             _inventoryView = inventoryEquipmentView;
             _inventoryEquipment = inventoryEquipment;
@@ -101,7 +99,7 @@ namespace Player.EquipmentInventores
             _inventoryController.AddItem(newItem);
         }
 
-        private void EquipWeapon(ItemWeapon weapon) => 
+        private void EquipWeapon(ItemWeapon weapon) =>
             _weaponSystem.EquipWeapon(weapon.Weapon);
     }
 }
