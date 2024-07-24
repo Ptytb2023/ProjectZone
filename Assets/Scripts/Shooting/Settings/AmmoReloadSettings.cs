@@ -6,12 +6,13 @@ namespace Shooting.Settings
     [Serializable]
     public class AmmoReloadSettings
     {
-        [field: SerializeField] public int MaximumAmmo { get; private set; }
+        [field: SerializeField] public string ItemIdBulelt { get; private set; }
+        [field: SerializeField] public int MagazineSize { get; private set; }
         [field: SerializeField] public float ReloadTime { get; private set; }
 
         public AmmoReloadSettings(int maximumAmmo, float reloadTime)
         {
-            MaximumAmmo = maximumAmmo;
+            MagazineSize = maximumAmmo;
             ReloadTime = reloadTime;
         }
     }

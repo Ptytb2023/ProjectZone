@@ -1,24 +1,26 @@
-﻿using Services.Input;
+﻿using System;
+using Factorys;
+using Services.Input;
 using Shooting.Weapons;
 using UnityEngine;
 using Zenject;
-using System;
 
 namespace Shooting
 {
     public class WeaponSystem : MonoBehaviour, IWeaponSystem
     {
-        [SerializeField] private Transform _gunParent;
+        [SerializeField] private Transform _weaponPoint;
 
-        private IWeapon _currentWeapon;
+        private IFactoryObject _factory;
+        private BaseWeapon _currentWeapon;
         private IInputService _inputService;
 
-        private ShootingRate _shootingRate = new ShootingRate();
-        private Action Reloading;
-
         [Inject]
-        private void Construct(IInputService inputService) =>
+        private void Construct(IInputService inputService, IFactoryObject factory) 
+        {
             _inputService = inputService;
+            _factory = factory;
+        }
 
         private void OnEnable() =>
             _inputService.PressedShoot += OnPressedShoot;
@@ -26,47 +28,24 @@ namespace Shooting
         private void OnDisable() =>
             _inputService.PressedShoot -= OnPressedShoot;
 
-
-        public void EquipWeapon(IWeapon weapon)
+        public void EquipWeapon(BaseWeapon weapon)
         {
             if (weapon == null)
                 throw new ArgumentNullException(nameof(weapon), "The weapon cannot be null.");
 
             DeactivateCurrentWeapon();
-            _currentWeapon = weapon;
 
-            if (_currentWeapon is IGun gun)
-            {
-                gun.AmmoChanged.Subscribe(HandleAmmoChanged);
-                Reloading += gun.Reload;
-            }
-
-            _shootingRate.SetShotsPerSecond(_currentWeapon.Settings.ShotsPerSecond);
+            _currentWeapon = _factory.Creat(weapon);
         }
 
         private void DeactivateCurrentWeapon()
         {
-            if (_currentWeapon == null)
-                return;
-
-            _currentWeapon.SetActive(false);
-
-            if (_currentWeapon is IGun gun)
-            {
-                gun.AmmoChanged.Unsubscribe(HandleAmmoChanged);
-                Reloading -= gun.Reload;
-            }
-        }
-
-        private void HandleAmmoChanged(int count)
-        {
-            if (count > 0)
-                return;
-
-            Reloading?.Invoke();
+            if (_currentWeapon is not null)
+                Destroy(_currentWeapon.gameObject);
         }
 
         private void OnPressedShoot() =>
-            _shootingRate.AttemptToShoot(_currentWeapon);
+            _currentWeapon.TryShoot();
+
     }
 }

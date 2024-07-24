@@ -1,23 +1,22 @@
-﻿using ReactivePropertes;
+﻿using Inventarys;
+using ReactivePropertes;
 using Shooting.Settings;
 
 namespace Shooting.Weapons
 {
     public interface IWeapon
     {
-        public WeaponSettings Settings { get; }
-        void Shoot();
-        void SetActive(bool value);
+        WeaponSettings Settings { get; }
+        void TryShoot();
     }
 
     public interface IReloadable
     {
-        bool IsReloading { get; }
-        IObservable<int> AmmoChanged { get; }
+        IReadOnlyReactiveProperty<int> Ammo { get; }
         void Reload();
     }
 
-    public interface IGun : IWeapon, IReloadable
+    public interface IGun : IReloadable, IWeapon
     {
     }
 }

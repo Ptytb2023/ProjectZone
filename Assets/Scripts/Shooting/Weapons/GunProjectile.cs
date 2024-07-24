@@ -1,81 +1,74 @@
-﻿using ReactivePropertes;
-using UnityEngine;
+﻿using UnityEngine;
 using Shooting.Settings;
 using System.Collections;
-using Lean.Pool;
 using Shooting.Projectiles;
+using PoolObject;
+using Zenject;
+using Extensions;
+using Inventarys;
+using Inventorys.Structures;
+using System;
 
 namespace Shooting.Weapons
 {
-    public class GunProjectile : MonoBehaviour, IGun
+
+    public class GunProjectile : BaseGun
     {
-        [SerializeField] private GunProjectileSettings _gunSettings;
-        [SerializeField] private WeaponSettings _weaponSettings;
-        [SerializeField] private AmmoReloadSettings _ammoReloadSettings;
-
+        private WaitForSeconds _weaponRate;
         private WaitForSeconds _weaponReloadTime;
-        private IReactiveProperty<int> _ammoCount = new ReactiveProperty<int>();
 
-        private Transform ShootPoint => _gunSettings.ShootPoint;
+        private IInventoryController _inventoryController;
 
-        public bool IsReloading { get; private set; }
-        public ReactivePropertes.IObservable<int> AmmoChanged => _ammoCount;
-        public WeaponSettings Settings => _weaponSettings;
+        private IPool<Projectile> _pool;
 
+        private Transform ShootPoint => GunSettings.ShootPoint;
+
+
+        [Inject]
+        private void Construct(IPool<Projectile> pool, IInventoryController inventoryController)
+        {
+            _inventoryController = inventoryController;
+            _pool = pool;
+        }
 
         private void Start()
         {
-            var second = _ammoReloadSettings.ReloadTime;
+            float second = AmmoReloadSettings.ReloadTime;
             _weaponReloadTime = new WaitForSeconds(second);
+
+            float secondDelay = 1.0f / Settings.ShotsPerSecond;
+            _weaponRate = new WaitForSeconds(secondDelay);
+
         }
 
-        private void OnEnable() =>
-            IsReloading = false;
-
-        public void Reload() =>
-            StartCoroutine(ReloadCoroutine());
-
-        public void Shoot()
+        protected override IEnumerator PerformReload(Action onComplited)
         {
-            _ammoCount.Value--;
-
-            var bullet = GetBullet();
-
-            Vector2 position = ShootPoint.position;
-            Vector2 direction = GetDirection();
-            float damage = _weaponSettings.BaseDamage;
-
-            bullet.Shoot(position, direction, damage);
-        }
-
-        private Projectile GetBullet()
-        {
-            var prefab = _gunSettings.ProjectilePrefab;
-            return LeanPool.Spawn(prefab);
-        }
-
-        private Vector2 GetDirection()
-        {
-            float angle = ShootPoint.eulerAngles.z;
-            Vector2 direction =
-                new Vector2(
-                Mathf.Cos(angle * Mathf.Deg2Rad),
-                Mathf.Sin(angle * Mathf.Deg2Rad));
-
-            return direction;
-        }
-
-        private IEnumerator ReloadCoroutine()
-        {
-            IsReloading = true;
             yield return _weaponReloadTime;
 
-            _ammoCount.Value = _ammoReloadSettings.MaximumAmmo;
-            IsReloading = false;
+            int count = AmmoReloadSettings.MagazineSize;
+            string idItem = AmmoReloadSettings.ItemIdBulelt;
+
+            RemoveItemResult result = _inventoryController.RemoveAvailableItems(idItem, count);
+
+            if (result.Success)
+                CurrentAmmo.Value = result.AmountRemoved;
+
+            onComplited?.Invoke();
         }
 
-        public void SetActive(bool value) =>
-            gameObject.SetActive(value);
+        protected override IEnumerator PerformShoot(Action onComplited)
+        {
+            var bullet = _pool.Request();
 
+            Vector2 position = ShootPoint.position;
+            Vector2 direction = ShootPoint.GetDirection();
+
+            float damage = Settings.BaseDamage;
+
+            bullet.Shoot(position, direction, damage);
+
+            yield return _weaponRate;
+            onComplited?.Invoke();
+        }
     }
 }

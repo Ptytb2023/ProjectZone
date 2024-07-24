@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PoolObject;
+using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Shooting.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Projectile : MonoBehaviour, IProjectile
+    public class Projectile : MonoBehaviour, IProjectile, IPoolabel
     {
         [SerializeField] private float _speedBullet;
 
@@ -43,5 +44,12 @@ namespace Shooting.Projectiles
             }
         }
 
+        public void OnSpawn()
+        {
+        }
+
+        public void OnDisapw()
+        {
+        }
     }
 }

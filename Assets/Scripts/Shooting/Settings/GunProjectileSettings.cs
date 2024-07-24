@@ -8,6 +8,5 @@ namespace Shooting.Settings
     public class GunProjectileSettings
     {
         [field: SerializeField] public Transform ShootPoint { get; private set; }
-        [field: SerializeField] public Projectile ProjectilePrefab { get; private set; }
     }
 }

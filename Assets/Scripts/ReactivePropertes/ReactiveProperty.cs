@@ -40,7 +40,13 @@ namespace ReactivePropertes
         public void Unsubscribe(Action<T> subscriber) =>
             _subscribers.Remove(subscriber);
 
-        private void NotifySubscribers() =>
-            _subscribers.ForEach(subscriber => subscriber?.Invoke(Value));
+        private void NotifySubscribers()
+        {
+            for (int i = 0; i < _subscribers.Count; i++)
+            {
+                var subscriber = _subscribers[i];
+                subscriber?.Invoke(Value);
+            }
+        }
     }
 }

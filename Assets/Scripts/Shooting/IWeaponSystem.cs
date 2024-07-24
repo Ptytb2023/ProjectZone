@@ -4,6 +4,6 @@ namespace Shooting
 {
     public interface IWeaponSystem
     {
-        void EquipWeapon(IWeapon gun);
+        void EquipWeapon(BaseWeapon gun);
     }
 }
