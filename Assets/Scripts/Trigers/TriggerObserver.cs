@@ -2,11 +2,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
-public class ZoneTrigger<T> : MonoBehaviour, IZoneTrigger<T>
+public class TriggerObserver : MonoBehaviour, ITriggerObserver
 {
-    public event Action<T> TrigerEnter;
-
     private CircleCollider2D _circleCollider;
+
+    public event Action<Collider2D> TrigerExit;
+    public event Action<Collider2D> TrigerEnter;
 
     private void Awake()
     {
@@ -17,11 +18,11 @@ public class ZoneTrigger<T> : MonoBehaviour, IZoneTrigger<T>
     public void SetRadius(float radius) =>
         _circleCollider.radius = radius;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out T component))
-            TrigerEnter?.Invoke(component);
-    }
+    private void OnTriggerEnter2D(Collider2D collision) => 
+        TrigerEnter?.Invoke(collision);
+
+    private void OnTriggerExit2D(Collider2D collision) => 
+        TrigerExit?.Invoke(collision);
 }
 
 

@@ -16,7 +16,7 @@ namespace Shooting
         private IInputService _inputService;
 
         [Inject]
-        private void Construct(IInputService inputService, IFactoryObject factory) 
+        private void Construct(IInputService inputService, IFactoryObject factory)
         {
             _inputService = inputService;
             _factory = factory;
@@ -36,6 +36,8 @@ namespace Shooting
             DeactivateCurrentWeapon();
 
             _currentWeapon = _factory.Creat(weapon);
+            _currentWeapon.transform.parent = _weaponPoint;
+            _weaponPoint.transform.localPosition = Vector3.zero;
         }
 
         private void DeactivateCurrentWeapon()

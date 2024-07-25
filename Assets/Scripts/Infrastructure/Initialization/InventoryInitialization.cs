@@ -1,12 +1,10 @@
 ﻿using DataPersistence;
 using Inventarys.Data;
 using Inventarys.Model;
-using ItemSystem.Items.Equipments;
 using Player.EquipmentInventores.Data;
 using Player.EquipmentInventores.Model;
 using Services;
 using Services.Save;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;

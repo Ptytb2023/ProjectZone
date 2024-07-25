@@ -18,9 +18,8 @@ namespace Shooting.Weapons
 
         public IReadOnlyReactiveProperty<int> Ammo => CurrentAmmo;
 
-        private void Awake() =>
-            CurrentAmmo = new ReactiveProperty<int>();
-
+        private void Awake() => 
+            CurrentAmmo = new ReactiveProperty<int>(AmmoReloadSettings.MagazineSize);
 
         public override void TryShoot()
         {

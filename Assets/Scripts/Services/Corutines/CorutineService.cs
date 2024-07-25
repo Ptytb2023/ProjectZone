@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace Services.Corutines
 {
-    public class CorutineService : MonoBehaviour, ICorutineService
+    public class CorutineService : MonoBehaviour, ICoroutineService
     {
-
-        public Coroutine StartCorutine(IEnumerator coroutine)
+        public Coroutine RunCoroutine(IEnumerator coroutine)
         {
             if (coroutine is null)
                 throw new NullReferenceException($"{nameof(coroutine)} it should not be null");
@@ -15,7 +14,7 @@ namespace Services.Corutines
             return StartCoroutine(coroutine);
         }
 
-        public void StopCorutine(Coroutine coroutine)
+        public void Stop(Coroutine coroutine)
         {
             if (coroutine is null)
                 throw new NullReferenceException($"{nameof(coroutine)} it should not be null");

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 using Random = UnityEngine.Random;
 
@@ -13,30 +6,30 @@ namespace Extensions
 {
     public static class Vector2Extension
     {
-        public static Vector2 GetVector2Direction(this Vector2 from, Vector2 to)
+        public static Vector2 GetVector2Direction(this Transform from, Transform to)
         {
-            Vector2 direction = to - from;
+            Vector2 direction = to.position - from.position;
 
             return direction.normalized;
         }
 
-        public static Vector2 GetDirection(this Transform transform)
+        public static Vector2 GetDirectionForward(this Transform transform)
         {
             float angle = transform.eulerAngles.z;
 
-            return CalculateDirection(angle);
+            return CalculateDirectionForward(angle);
         }
 
-        public static Vector2 GetVector2DirectionRange(this Transform transform, float minMax, float maxAngle)
+        public static Vector2 GetVector2DirectionForwardRange(this Transform transform, float minMax, float maxAngle)
         {
             float angle = transform.eulerAngles.z;
 
             angle += Random.Range(minMax, maxAngle);
 
-            return CalculateDirection(angle);
+            return CalculateDirectionForward(angle);
         }
 
-        private static Vector2 CalculateDirection(float angle)
+        private static Vector2 CalculateDirectionForward(float angle)
         {
             return new Vector2(
                     Mathf.Cos(angle * Mathf.Deg2Rad),

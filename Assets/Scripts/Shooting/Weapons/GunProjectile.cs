@@ -61,7 +61,7 @@ namespace Shooting.Weapons
             var bullet = _pool.Request();
 
             Vector2 position = ShootPoint.position;
-            Vector2 direction = ShootPoint.GetDirection();
+            Vector2 direction = ShootPoint.GetDirectionForward();
 
             float damage = Settings.BaseDamage;
 

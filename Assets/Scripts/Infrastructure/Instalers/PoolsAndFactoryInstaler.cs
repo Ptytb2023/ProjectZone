@@ -15,11 +15,14 @@ namespace Infrastructure.Instalers
 
         public override void InstallBindings()
         {
-            FactoryObject factory = BindFactory();
-            BindProjectilePool(factory);
+            FactoryObject factory = InstalFactoryObject();
+            InstalPools(factory);
+
+            InstalFactoryEnemyState();
+            InstalFactoryEnemy();
         }
 
-        private FactoryObject BindFactory()
+        private FactoryObject InstalFactoryObject()
         {
             var factory = new FactoryObject(Container);
 
@@ -27,7 +30,7 @@ namespace Infrastructure.Instalers
             return factory;
         }
 
-        private void BindProjectilePool(FactoryObject factory)
+        private void InstalPools(FactoryObject factory)
         {
             var poolProjectile = new Pool<Projectile>(_projectilePrefab, _container, factory);
             var poolItemLoot = new Pool<ItemLoot>(_lootPrefab, _container, factory);
@@ -35,5 +38,11 @@ namespace Infrastructure.Instalers
             Container.BindInterfacesAndSelfTo<Pool<Projectile>>().FromInstance(poolProjectile).AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<Pool<ItemLoot>>().FromInstance(poolItemLoot).AsSingle().NonLazy();
         }
+
+        private void InstalFactoryEnemyState() => 
+            Container.BindInterfacesAndSelfTo<FactoryEnemyState>().AsSingle().NonLazy();
+
+        private void InstalFactoryEnemy() => 
+            Container.BindInterfacesAndSelfTo<FactoryEnemy>().AsSingle().NonLazy();
     }
 }

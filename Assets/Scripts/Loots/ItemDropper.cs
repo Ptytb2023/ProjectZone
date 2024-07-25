@@ -25,7 +25,7 @@ namespace Loots
         {
             ItemLoot loot = GetItem(itemId);
 
-            Vector2 direction = dropper.GetVector2DirectionRange(0, AngleDrop);
+            Vector2 direction = dropper.GetVector2DirectionForwardRange(0, AngleDrop);
             loot.Drop(dropper.position, direction);
         }
 
@@ -33,7 +33,7 @@ namespace Loots
         {
             ItemLoot loot = GetItem(itemId);
 
-            Vector2 direction = dropper.GetVector2DirectionRange(MinAngleDropForward, MaxAngleDropForward);
+            Vector2 direction = dropper.GetVector2DirectionForwardRange(MinAngleDropForward, MaxAngleDropForward);
             loot.Drop(dropper.position, direction);
         }
 

@@ -1,0 +1,125 @@
+{
+  "MainInvetory": {
+    "Size": 23,
+    "Slots": [
+      {
+        "ItemId": "301",
+        "Amount": 32
+      },
+      {
+        "ItemId": "301",
+        "Amount": 32
+      },
+      {
+        "ItemId": "301",
+        "Amount": 42
+      },
+      {
+        "ItemId": "102",
+        "Amount": 1
+      },
+      {
+        "ItemId": "301",
+        "Amount": 55
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      },
+      {
+        "ItemId": "",
+        "Amount": 0
+      }
+    ]
+  },
+  "InventoryEquipments": [
+    {
+      "itemId": "101",
+      "Type": 4
+    },
+    {
+      "itemId": "",
+      "Type": 0
+    },
+    {
+      "itemId": "",
+      "Type": 1
+    },
+    {
+      "itemId": "",
+      "Type": 2
+    },
+    {
+      "itemId": "",
+      "Type": 3
+    },
+    {
+      "itemId": "201",
+      "Type": 5
+    }
+  ]
+}

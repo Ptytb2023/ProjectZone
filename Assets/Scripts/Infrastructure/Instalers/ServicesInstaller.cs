@@ -1,5 +1,6 @@
 ﻿using DataPersistence;
 using Services;
+using Services.Corutines;
 using Services.Input;
 using Services.Save;
 using Services.SceneLoaders;
@@ -12,6 +13,7 @@ namespace Infrastructure.Instalers
 {
     public class ServicesInstaller : MonoInstaller
     {
+        [SerializeField] private CorutineService _corutineService;
         [SerializeField] private FilePathSo _pathToPlayerProggress;
         [SerializeField] private PlayerInputView _playerInputView;
         [SerializeField] private ItemDataSo _itemData;
@@ -25,6 +27,8 @@ namespace Infrastructure.Instalers
             InstallServiceSceneLoader();
             InstallItemService();
             InstallInputService();
+
+            InstalCorutineService();
         }
 
         private void InstalPermisonService() =>
@@ -53,5 +57,8 @@ namespace Infrastructure.Instalers
 
         private void InstallServiceSceneLoader() =>
             Container.BindInterfacesAndSelfTo<UnitySceneLoader>().AsSingle().NonLazy();
+
+        private void InstalCorutineService() => 
+            Container.BindInterfacesAndSelfTo<CorutineService>().FromInstance(_corutineService).AsSingle().NonLazy();
     }
 }
