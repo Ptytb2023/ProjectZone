@@ -1,10 +1,4 @@
 ﻿using PoolObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -23,7 +17,6 @@ namespace Shooting.Projectiles
         
         private float _time;
 
-
         [Inject]
         private void Construct(IPool<Projectile> pool)=>
             _pool = pool;
@@ -33,7 +26,6 @@ namespace Shooting.Projectiles
 
         private void OnEnable() => 
             _time = Random.Range(_minTime, _maxTime);
-
 
         private void Update()
         {

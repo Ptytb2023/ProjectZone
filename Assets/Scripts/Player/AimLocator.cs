@@ -1,5 +1,6 @@
 ﻿using Enemys;
 using Extensions;
+using Shooting;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Player
     [RequireComponent(typeof(TriggerObserver))]
     public class AimLocator : MonoBehaviour
     {
-        [SerializeField] private Transform _weaponPoint;
+        [SerializeField] private WeaponSystem _weaponPoint;
 
         private List<Enemy> _enemys = new List<Enemy>();
 
@@ -35,22 +36,19 @@ namespace Player
                 _enemys[i].Died -= OnEnemyDied;
         }
 
-
         private IEnumerator AimProcess()
         {
             while (_currentTarget != null)
             {
-
                 if (_enemys.Count <= 0)
                 {
                     _currentTarget = null;
-                    StopCoroutine(_aimProcess);
                     yield break;
                 }
 
                 FindClosestEnemy();
-                Vector2 direction = _weaponPoint.GetVector2Direction(_currentTarget.transform);
-                Roation(direction);
+                Vector2 direction = _weaponPoint.transform.GetVector2Direction(_currentTarget.transform);
+                Rotation(direction);
 
                 yield return null;
             }
@@ -73,13 +71,13 @@ namespace Player
             }
         }
 
-        private void Roation(Vector2 direction)
+        private void Rotation(Vector2 direction)
         {
             if (direction == Vector2.zero)
                 return;
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            _weaponPoint.eulerAngles = new Vector3(0, 0, angle);
+            _weaponPoint.transform.eulerAngles = new Vector3(0, 0, angle);
         }
 
         private void OnTriggerEnterObserver(Collider2D collider)

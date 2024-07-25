@@ -14,19 +14,11 @@ namespace Player.EquipmentInventores.Model
         private Dictionary<EquipmentType, InventoryEquipmentSlot> _slots;
         public IInventoryEquipmentSlot[] EquipmentsSlots => _slots.Values.ToArray();
 
-
         public InventoryEquipment(List<InventoryEquipmentSlotData> data)
         {
             _slots = new Dictionary<EquipmentType, InventoryEquipmentSlot>();
 
-            foreach (var item in data)
-            {
-                if (_slots.ContainsKey(item.Type))
-                    throw new ArgumentException();
-
-                var slot = new InventoryEquipmentSlot(item.itemId, item.Type);
-                _slots.Add(slot.Type, slot);
-            }
+            CreateSlots(data);
         }
 
         public ReplaceItemResult ReplaceItem(EquipmentType type, string itemId)
@@ -38,6 +30,18 @@ namespace Player.EquipmentInventores.Model
             slot.SetSlot(itemId);
 
             return new ReplaceItemResult(itemIdRemoved, itemId, true);
+        }
+
+        private void CreateSlots(List<InventoryEquipmentSlotData> data)
+        {
+            foreach (var item in data)
+            {
+                if (_slots.ContainsKey(item.Type))
+                    throw new ArgumentException();
+
+                var slot = new InventoryEquipmentSlot(item.itemId, item.Type);
+                _slots.Add(slot.Type, slot);
+            }
         }
     }
 }

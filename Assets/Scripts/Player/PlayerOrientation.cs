@@ -11,8 +11,9 @@ namespace Player
         {
             if (_move.Direction.x > 0)
                 Swap(false);
-            else
+            else if (_move.Direction.x < 0)
                 Swap(true);
+
         }
 
         private void Swap(bool isSwap)

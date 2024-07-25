@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Healths;
+using System;
 using UnityEngine;
 
 namespace Enemys
@@ -22,7 +23,7 @@ namespace Enemys
             if (_enemyStateMachine is not null)
                 _enemyStateMachine.Start();
 
-            _health.Value.Subscribe(OnChangeHealth);
+            _health.CurrentHealth.Subscribe(OnChangeHealth);
         }
 
         private void OnDisable()
@@ -30,11 +31,11 @@ namespace Enemys
             if (_enemyStateMachine is not null)
                 _enemyStateMachine.Stop();
 
-            _health.Value.Unsubscribe(OnChangeHealth);
+            _health.CurrentHealth.Unsubscribe(OnChangeHealth);
         }
 
         public void TakeDemage(float damege) =>
-           _health.TakeDamage(damege);
+           _health.InflictDamage(damege);
 
         private void OnChangeHealth(float value)
         {

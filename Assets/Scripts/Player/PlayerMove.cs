@@ -10,7 +10,6 @@ namespace Player
         [SerializeField][Min(0.0f)] private float _speedMove;
 
         private Rigidbody2D _rigidbody;
-
         private IInputService _input;
 
         public Vector2 Direction { get; private set; }

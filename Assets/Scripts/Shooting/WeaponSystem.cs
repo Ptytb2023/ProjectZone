@@ -17,6 +17,8 @@ namespace Shooting
         private BaseWeapon _currentWeapon;
         private IInputService _inputService;
 
+        public BaseWeapon CurrentWeapom => _currentWeapon;  
+
         [Inject]
         private void Construct(IInputService inputService, IFactoryObject factory)
         {

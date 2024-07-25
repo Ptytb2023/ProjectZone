@@ -1,5 +1,4 @@
-﻿using Inventarys;
-using ReactivePropertes;
+﻿using ReactivePropertes;
 using Shooting.Settings;
 using System;
 

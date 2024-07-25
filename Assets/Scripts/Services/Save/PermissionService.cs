@@ -9,9 +9,6 @@ namespace Services.Save
             bool isRead = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead);
             bool isWrite = Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite);
 
-
-            UnityEngine.Debug.Log($"isWrite = {isWrite}, isRead = {isRead}");
-
             if (!(isRead && isWrite))
             {
                 Permission.RequestUserPermission(Permission.ExternalStorageRead);

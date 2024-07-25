@@ -1,4 +1,4 @@
-﻿using Enemys;
+﻿using Healths;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +9,13 @@ namespace UI
         [SerializeField] private Slider _healthBarSlider;
         [SerializeField] private Health _health;
 
-
         private void OnEnable() => 
-            _health.Value.SubscribeAndUpdate(OnChageHealth);
+            _health.CurrentHealth.SubscribeAndUpdate(OnChageHealth);
 
         private void OnDisable() =>
-            _health.Value.Unsubscribe(OnChageHealth);
+            _health.CurrentHealth.Unsubscribe(OnChageHealth);
 
         private void OnChageHealth(float value) => 
-            _healthBarSlider.value = value / _health.MaxValue;
+            _healthBarSlider.value = value / _health.MaximumHealth;
     }
 }

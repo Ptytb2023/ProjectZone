@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Enemys
 {
-    public class Moveble
+    public class Moveable
     {
-        private const int RotationByBack = 180;
-
         private float _moveSpeed;
         private Transform _transform;
 
-        public Moveble(Transform transfrom, float moveSpeed)
+        public Moveable(Transform transfrom, float moveSpeed)
         {
             _moveSpeed = moveSpeed;
             _transform = transfrom;

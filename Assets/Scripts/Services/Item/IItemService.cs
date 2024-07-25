@@ -7,8 +7,8 @@ namespace Services
     {
         bool ContainsItem(string itemId);
         IItem GetItem(string itemId);
-        IItem GetRandomItem();
         T GetItem<T>(string itemId) where T : IItem;
+        IItem GetRandomItem();
     }
 }
 

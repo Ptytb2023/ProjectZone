@@ -14,15 +14,13 @@ namespace Shooting.Weapons
 
     public class GunProjectile : BaseGun
     {
-        private WaitForSeconds _weaponRate;
+        private IInventoryController _inventoryController;
+        private IPool<Projectile> _pool;
+       
+        private WaitForSeconds _shootRate;
         private WaitForSeconds _weaponReloadTime;
 
-        private IInventoryController _inventoryController;
-
-        private IPool<Projectile> _pool;
-
         private Transform ShootPoint => GunSettings.ShootPoint;
-
 
         [Inject]
         private void Construct(IPool<Projectile> pool, IInventoryController inventoryController)
@@ -37,7 +35,7 @@ namespace Shooting.Weapons
             _weaponReloadTime = new WaitForSeconds(second);
 
             float secondDelay = 1.0f / Settings.ShotsPerSecond;
-            _weaponRate = new WaitForSeconds(secondDelay);
+            _shootRate = new WaitForSeconds(secondDelay);
 
         }
 
@@ -67,7 +65,7 @@ namespace Shooting.Weapons
 
             bullet.Shoot(position, direction, damage);
 
-            yield return _weaponRate;
+            yield return _shootRate;
             IsCanShoot = true;
         }
     }

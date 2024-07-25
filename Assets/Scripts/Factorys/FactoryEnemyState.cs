@@ -18,7 +18,7 @@ namespace Factorys
 
         public IExitableState CreateFollowState(Transform transform, EnemyData enemyData, EnemyStateMachine stateMachine)
         {
-            Moveble moveble = new Moveble(transform, enemyData.MoveSpeed);
+            Moveable moveble = new Moveable(transform, enemyData.MoveSpeed);
             RangeEvaluator rangeEvaluator = CreatRange(transform, enemyData);
 
             return new EnemyFollowState(moveble, rangeEvaluator, _corutineService, stateMachine);

@@ -132,6 +132,7 @@ MonoBehaviour:
   <Settings>k__BackingField:
     <ShotsPerSecond>k__BackingField: 3
     <BaseDamage>k__BackingField: 10
+  _spriteRenderer: {fileID: 6687601721103003574}
   GunSettings:
     <ShootPoint>k__BackingField: {fileID: 1908331199340104073}
   AmmoReloadSettings:

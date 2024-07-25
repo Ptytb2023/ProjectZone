@@ -13,7 +13,6 @@ namespace Shooting.Weapons
 
         protected Coroutine CurrentAction;
         protected IReactiveProperty<int> CurrentAmmo;
-
         protected bool IsCanShoot;
 
         public event Action<float> ReloadStart;

@@ -9,9 +9,8 @@ namespace Services.Input
     {
         private readonly PlayerInputView _inputModel;
 
-        public Vector2 Axis => GetAxisByJoystick();
-
         private Joystick Joystick => _inputModel.Joystick;
+        public Vector2 Axis => GetAxisByJoystick();
 
         public event Action PressedShoot;
         public event Action PressedOpenInventory;

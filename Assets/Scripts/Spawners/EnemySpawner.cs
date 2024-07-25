@@ -37,7 +37,7 @@ namespace Spawners
         {
             for (int i = 0; i < _countSpawn; i++)
             {
-                Enemy enemy = _factory.Creat(_enemyPrefab, _enemyData);
+                Enemy enemy = _factory.Create(_enemyPrefab, _enemyData);
 
                 Vector3 spawnPostion = GetRandomPostion();
 

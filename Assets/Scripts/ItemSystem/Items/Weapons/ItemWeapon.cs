@@ -1,6 +1,5 @@
 ﻿using System;
 using ItemSystem.Items.Equipments;
-using Player.EquipmentInventores;
 using Shooting.Weapons;
 using UnityEngine;
 

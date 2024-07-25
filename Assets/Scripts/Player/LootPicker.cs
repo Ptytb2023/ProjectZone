@@ -24,7 +24,7 @@ namespace Player
             _inventoryController = inventoryController;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.TryGetComponent(out ItemLoot item))
             {
@@ -35,11 +35,6 @@ namespace Player
 
                 _pool.Return(item);
             }
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            
         }
     }
 }

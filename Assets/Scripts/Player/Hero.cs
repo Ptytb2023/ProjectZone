@@ -1,4 +1,5 @@
 ﻿using Enemys;
+using Healths;
 using System;
 using UnityEngine;
 
@@ -16,13 +17,13 @@ namespace Player
           _health = GetComponent<Health>();
 
         private void Start() =>
-           _health.Value.Subscribe(OnChangeHealth);
+           _health.CurrentHealth.Subscribe(OnChangeHealth);
 
         private void OnDestroy() =>
-            _health.Value.Unsubscribe(OnChangeHealth);
+            _health.CurrentHealth.Unsubscribe(OnChangeHealth);
 
         public void TakeDemage(float damege) =>
-            _health.TakeDamage(damege);
+            _health.InflictDamage(damege);
 
         private void OnChangeHealth(float value)
         {

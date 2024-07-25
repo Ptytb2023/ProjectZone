@@ -8,7 +8,7 @@ namespace Enemys
 {
     public class EnemyFollowState : IPayloadedState<Hero>
     {
-        private Moveble _moveble;
+        private Moveable _moveble;
         private RangeEvaluator _rangeEvaluator;
 
         private EnemyStateMachine _stateMachine;
@@ -18,7 +18,7 @@ namespace Enemys
         private Coroutine _follow;
 
         public EnemyFollowState(
-            Moveble moveble,
+            Moveable moveble,
             RangeEvaluator rangeEvaluator,
             ICoroutineService corutineService,
             EnemyStateMachine enemyStateMachine)

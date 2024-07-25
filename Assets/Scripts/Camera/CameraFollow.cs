@@ -4,14 +4,15 @@ namespace Camera
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] public Transform _target;
-        [SerializeField] public float _smoothSpeed = 0.125f;
-        [SerializeField] public Vector3 _offset;
+        [SerializeField] private Transform target; 
+        [SerializeField] private float smoothSpeed = 50f; 
+        [SerializeField] private Vector3 offset; 
 
         private void LateUpdate()
         {
-            Vector3 desiredPosition = _target.position + _offset;
-            Vector3 smoothedPosition = Vector3.MoveTowards(transform.position, desiredPosition, _smoothSpeed * Time.deltaTime);
+            Vector3 desiredPosition = target.position + offset;
+            Vector3 smoothedPosition = Vector3.MoveTowards(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+
             transform.position = smoothedPosition;
         }
     }

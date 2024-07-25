@@ -17,14 +17,7 @@ namespace Services
         {
             _items = new Dictionary<string, IItem>();
 
-
-            foreach (var item in items)
-            {
-                if (item is null || string.IsNullOrEmpty(item.Id))
-                    throw new ArgumentNullException(nameof(item), "Item cannot be null.");
-
-                _items.Add(item.Id, item);
-            }
+            CreateItems(items);
         }
 
         public IItem GetItem(string itemId)
@@ -50,6 +43,17 @@ namespace Services
         {
             int randomIndex = Random.Range(0,_items.Count);
             return _items.ElementAt(randomIndex).Value;
+        }
+
+        private void CreateItems(IEnumerable<IItem> items)
+        {
+            foreach (var item in items)
+            {
+                if (item is null || string.IsNullOrEmpty(item.Id))
+                    throw new ArgumentNullException(nameof(item), "Item cannot be null.");
+
+                _items.Add(item.Id, item);
+            }
         }
     }
 }

@@ -6,7 +6,6 @@ namespace ReactivePropertes
     public class ReactiveProperty<T> : IReactiveProperty<T>
     {
         private T _currentValue;
-
         private List<Action<T>> _subscribers = new List<Action<T>>();
 
         public ReactiveProperty() =>

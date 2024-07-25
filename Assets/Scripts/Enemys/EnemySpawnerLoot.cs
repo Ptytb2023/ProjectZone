@@ -16,9 +16,6 @@ namespace Enemys
         private IItemService _itemService;
         private IItemDropper _itemDroper;
 
-        private void Awake() => 
-            _enemy = GetComponent<Enemy>();
-
         [Inject]
         public void Construct(IItemService itemService, IItemDropper itemDropper)
         {
@@ -26,14 +23,14 @@ namespace Enemys
             _itemService = itemService;
         }
 
+        private void Awake() => 
+            _enemy = GetComponent<Enemy>();
+
         private void OnEnable() =>
             _enemy.Died += OnEnemyDied;
 
-
-
         private void OnDisable() =>
             _enemy.Died -= OnEnemyDied;
-
 
         private void OnEnemyDied(Enemy enemy)
         {

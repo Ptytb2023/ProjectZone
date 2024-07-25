@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6687601721103003574}
   - component: {fileID: 1527714302995713170}
   m_Layer: 0
-  m_Name: Postol
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   <Settings>k__BackingField:
     <ShotsPerSecond>k__BackingField: 1
     <BaseDamage>k__BackingField: 5
+  _spriteRenderer: {fileID: 6687601721103003574}
   GunSettings:
     <ShootPoint>k__BackingField: {fileID: 1908331199340104073}
   AmmoReloadSettings:

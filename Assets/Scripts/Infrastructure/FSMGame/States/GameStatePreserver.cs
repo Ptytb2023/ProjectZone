@@ -6,6 +6,7 @@ using Player.EquipmentInventores.Model;
 using Player.EquipmentInventores.Slot;
 using Services.Save;
 using System.Collections.Generic;
+using System.Linq;
 using Zenject;
 
 namespace Infrastructure.FSMGame
@@ -23,46 +24,33 @@ namespace Infrastructure.FSMGame
 
         public async void Enter()
         {
-
-            InventoryData inventoryData = CreatInventorySlotData();
-
-            List<InventoryEquipmentSlotData> inventoryEquipmentSlotDatas = CreatEquipmentSlot();
+            InventoryData inventoryData = CreateInventorySlotData();
+            List<InventoryEquipmentSlotData> inventoryEquipmentSlotDatas = CreateEquipmentSlot();
 
             PlayerPorgress playerPorgress = new PlayerPorgress(inventoryData, inventoryEquipmentSlotDatas);
 
             await _saveLoadService.Save(playerPorgress);
         }
 
-        private InventoryData CreatInventorySlotData()
+        private InventoryData CreateInventorySlotData()
         {
-            List<InventorySlotData> inventorySlotDatas;
-            int size;
-
             var inventory = _container.Resolve<IInventory>();
 
-            inventorySlotDatas = new();
-            size = inventory.Size;
-            foreach (var slot in inventory.InventorySlots)
-            {
-                InventorySlotData inventorySlotData =
-                    new InventorySlotData(slot.ItemId.GetValue(), slot.Amount.GetValue());
+            int size = inventory.Size;
 
-                inventorySlotDatas.Add(inventorySlotData);
-            }
+          var  inventorySlotDatas = inventory.InventorySlots.Select(slot =>
+             new InventorySlotData(slot.ItemId.GetValue(), slot.Amount.GetValue())).ToList();
 
             return new InventoryData(size, inventorySlotDatas);
         }
 
-        private List<InventoryEquipmentSlotData> CreatEquipmentSlot()
+        private List<InventoryEquipmentSlotData> CreateEquipmentSlot()
         {
             var inventoryEquipment = _container.Resolve<IInventoryEquipment>();
-            IInventoryEquipmentSlot[] slot = inventoryEquipment.EquipmentsSlots;
-            List<InventoryEquipmentSlotData> inventoryEquipmentSlotDatas = new();
-            foreach (var slotData in inventoryEquipment.EquipmentsSlots)
-            {
-                var newSlot = new InventoryEquipmentSlotData(slotData.ItemID, slotData.Type);
-                inventoryEquipmentSlotDatas.Add(newSlot);
-            }
+            IInventoryEquipmentSlot[] slots = inventoryEquipment.EquipmentsSlots;
+
+            var inventoryEquipmentSlotDatas = slots.Select(slot =>
+         new InventoryEquipmentSlotData(slot.ItemID, slot.Type)).ToList();
 
             return inventoryEquipmentSlotDatas;
         }

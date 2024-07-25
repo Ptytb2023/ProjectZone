@@ -14,19 +14,17 @@ namespace Factorys
             _factoryObject = factoryObject;
         }
 
-        public Enemy Creat(Enemy enemyPrefab, EnemyData enemyData)
+        public Enemy Create(Enemy enemyPrefab, EnemyData enemyData)
         {
             Enemy enemy = _factoryObject.Creat(enemyPrefab);
 
             TriggerObserver triggerObserver = GetTrigger(enemy, enemyData);
-
             Transform transform = enemy.transform;
 
             EnemyStateMachine enemyStateMachine =
                 new EnemyStateMachine(enemyData, transform, triggerObserver, _enemyStateFactory);
 
             enemy.Init(enemyStateMachine);
-
             enemy.gameObject.SetActive(false);
 
             return enemy;

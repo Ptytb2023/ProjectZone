@@ -18,6 +18,7 @@ namespace DataPersistence
         {
             EnsureCreated();
         }
+
         public void EnsureCreated()
         {
             if (!Directory.Exists(DirectoryPath))

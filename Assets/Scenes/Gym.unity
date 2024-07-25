@@ -640,7 +640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644867679}
   m_Layer: 0
-  m_Name: PoolItemLoot
+  m_Name: PoolContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21546,7 +21546,7 @@ GameObject:
   - component: {fileID: 1767825187}
   - component: {fileID: 1767825188}
   m_Layer: 0
-  m_Name: PoolContainer
+  m_Name: SceneContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21629,7 +21629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lootPrefab: {fileID: 124016969503799752, guid: 5fa3369b776c0b54380e431ca38cf69f, type: 3}
   _projectilePrefab: {fileID: 8398804550523006249, guid: 728664e2e7b9cae478cd3f56b25b1636, type: 3}
-  _container: {fileID: 0}
+  _container: {fileID: 644867679}
 --- !u!114 &1767825188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21747,9 +21747,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeb80252b85a5c4eb9fd42ec43fbd70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 4847102085996999648}
-  _smoothSpeed: 50
-  _offset: {x: 0, y: 0, z: -10}
+  target: {fileID: 4847102085996999648}
+  smoothSpeed: 50
+  offset: {x: 0, y: 0, z: -10}
 --- !u!1 &1872046583
 GameObject:
   m_ObjectHideFlags: 0
@@ -28715,14 +28715,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1832834922}
-    - target: {fileID: 5154263413302610995, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
-      propertyPath: m_Sprite
+    - target: {fileID: 6109147611000087007, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
+      propertyPath: _weaponPoint
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5154263413302610995, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4847102085996999649}
     - target: {fileID: 7585909899001564804, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -28771,6 +28767,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8071905068836448796, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 9166195440916232249, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
       propertyPath: m_Name
       value: Player
@@ -28785,6 +28785,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8026431939431291181, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
   m_PrefabInstance: {fileID: 4847102085996999647}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4847102085996999649 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 888399133755982951, guid: 994b09dbc49701f41bec1f3ada5c5e79, type: 3}
+  m_PrefabInstance: {fileID: 4847102085996999647}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496cbea8c07157546aa8adbba07aa207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

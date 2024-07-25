@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2211617494820213627}
-  - component: {fileID: 8897580329466958400}
+  - component: {fileID: 5836627101679949527}
   m_Layer: 0
   m_Name: CorutineService
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4522190032106490998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8897580329466958400
+--- !u!114 &5836627101679949527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 136778928722106869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca05d595719c0fe4e80660b7628bd8f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 49be42c5433b44846ba5d5134db8c18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8515303169376095511
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a9837ec0632fb4ba9048cae9969ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _corutineService: {fileID: 8897580329466958400}
+  _corutineService: {fileID: 5836627101679949527}
   _pathToPlayerProggress: {fileID: 11400000, guid: d47720f3f5dbcd44fb2b2f98490dcf1a, type: 2}
   _playerInputView: {fileID: 8187270285362958455, guid: b32b3c7a13af17441bd4fff77e8be794, type: 3}
   _itemData: {fileID: 11400000, guid: 16cd446617895dc4e8ffd5f5120405f4, type: 2}

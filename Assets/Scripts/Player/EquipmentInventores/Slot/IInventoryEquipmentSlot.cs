@@ -1,5 +1,4 @@
 ﻿using ItemSystem.Items.Equipments;
-using ReactivePropertes;
 
 namespace Player.EquipmentInventores.Slot
 {

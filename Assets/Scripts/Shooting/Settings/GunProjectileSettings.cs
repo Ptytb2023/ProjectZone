@@ -1,5 +1,4 @@
-﻿using Shooting.Projectiles;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Shooting.Settings

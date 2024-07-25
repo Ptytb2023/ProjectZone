@@ -15,7 +15,6 @@ namespace Player.EquipmentInventores
 
         public Transform WeaponPoint => _weaponPoint;
 
-
         public void SetIcon(ItemEquipment item)
         {
             IEnumerable<CharacterEquipmentSlot> slots = _slots.Where(x => x.Type == item.EquipmentType);

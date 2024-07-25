@@ -13,6 +13,7 @@ namespace Services.Save
             string json = await reader.ReadToEndAsync();
 
             TModel model;
+
             try
             {
                 model = JsonConvert.DeserializeObject<TModel>(json);

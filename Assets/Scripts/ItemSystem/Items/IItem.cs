@@ -1,5 +1,4 @@
 ﻿using Inventarys.Data;
-using Shooting.Weapons;
 using UnityEngine;
 
 namespace ItemSystem

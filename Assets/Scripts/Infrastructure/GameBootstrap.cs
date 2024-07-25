@@ -14,6 +14,7 @@ namespace Infrastructure
         [SerializeField] private AsyncInitialization[] _initializations;
         [SerializeField] private Scene _levelScene;
 
+        private IPermissionService _permissionService;
         private IGameStateMachine _gameStateMachine;
 
         [Inject]
@@ -24,6 +25,9 @@ namespace Infrastructure
 
         private async void Start()
         {
+            if (Application.platform == RuntimePlatform.Android)
+                _permissionService.PermissionReques();
+
             var instializtions = _initializations.Select(x => x.InitializeAsync());
 
             await Task.WhenAll(instializtions);

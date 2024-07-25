@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Services.Corutines
+namespace Services.Coroutines
 {
-    public class CorutineService : MonoBehaviour, ICoroutineService
+    public class CoroutineService : MonoBehaviour, ICoroutineService
     {
         public Coroutine RunCoroutine(IEnumerator coroutine)
         {

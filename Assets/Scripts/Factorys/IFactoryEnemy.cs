@@ -4,6 +4,6 @@ namespace Factorys
 {
     public interface IFactoryEnemy
     {
-        Enemy Creat(Enemy enemyPrefab, EnemyData enemyData);
+        Enemy Create(Enemy enemyPrefab, EnemyData enemyData);
     }
 }

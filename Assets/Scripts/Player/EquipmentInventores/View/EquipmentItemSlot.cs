@@ -1,9 +1,6 @@
 ﻿using ItemSystem.Items.Equipments;
-using Player.EquipmentInventores.Slot;
-using Services;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Player.EquipmentInventores
 {
