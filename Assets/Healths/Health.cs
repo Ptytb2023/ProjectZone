@@ -6,17 +6,17 @@ namespace Enemys
 {
     public interface IDamageble
     {
-        event Action Died;
         void TakeDemage(float damege);
     }
 
     public class Health : MonoBehaviour
     {
-        [SerializeField] private float _startHelth;
+        [SerializeField] private float _maxValue;
 
         private IReactiveProperty<float> _health = new ReactiveProperty<float>();
 
         public IReadOnlyReactiveProperty<float> Value => _health;
+        public float MaxValue => _maxValue;
 
         private void Awake() => 
             ResetHealth();
@@ -40,6 +40,6 @@ namespace Enemys
         }
 
         public void ResetHealth() => 
-            _health.Value = _startHelth;
+            _health.Value = _maxValue;
     }
 }

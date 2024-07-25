@@ -15,45 +15,54 @@ MonoBehaviour:
   _itemResources:
   - <Id>k__BackingField: 301
     <Icon>k__BackingField: {fileID: 21300000, guid: d45f0cae013abb84688afe6e4bc52845, type: 3}
-    <Name>k__BackingField: DDD
-    <Description>k__BackingField: Lalsls
+    <Name>k__BackingField: 5,45x39
+    <Description>k__BackingField: cartridges
     <MaxStack>k__BackingField: 50
   _itemWeapons:
   - <Id>k__BackingField: 201
     <Icon>k__BackingField: {fileID: 21300000, guid: 6532bc2c52f179142a7333cc0f5faeda, type: 3}
-    <Name>k__BackingField: SS
-    <Description>k__BackingField: asfaf
+    <Name>k__BackingField: AK-47
+    <Description>k__BackingField: The AK-47, also known as the Kalashnikov, is a
+      widely recognized automatic rifle developed in the Soviet Union by Mikhail
+      Kalashnikov.
     <MaxStack>k__BackingField: 1
     <EquipmentType>k__BackingField: 5
     _weapon: {fileID: 1527714302995713170, guid: 1f829b5c230bc6842bdf69e0b923869a, type: 3}
+  - <Id>k__BackingField: 202
+    <Icon>k__BackingField: {fileID: 21300000, guid: 1b4696d341b6ec443b4e499361de0675, type: 3}
+    <Name>k__BackingField: Makarov
+    <Description>k__BackingField: The Makarov pistol, officially known as the PM
+    <MaxStack>k__BackingField: 1
+    <EquipmentType>k__BackingField: 5
+    _weapon: {fileID: 1527714302995713170, guid: fd59726bae54e5f4c927b9f896194c6f, type: 3}
   _itemEquipment:
   - <Id>k__BackingField: 101
     <Icon>k__BackingField: {fileID: 21300000, guid: 25c2a3f0b6bbd5e438f53bf9aa8b4c74, type: 3}
-    <Name>k__BackingField: asd
-    <Description>k__BackingField: asd
+    <Name>k__BackingField: pants
+    <Description>k__BackingField: Bandit Pants
     <MaxStack>k__BackingField: 1
     <EquipmentType>k__BackingField: 4
   - <Id>k__BackingField: 102
     <Icon>k__BackingField: {fileID: 21300000, guid: d811afb0d42fed140806f31df436fbda, type: 3}
-    <Name>k__BackingField: asd
-    <Description>k__BackingField: asd
+    <Name>k__BackingField: Cloak
+    <Description>k__BackingField: Bulletproof Cloak
     <MaxStack>k__BackingField: 1
     <EquipmentType>k__BackingField: 1
   - <Id>k__BackingField: 103
     <Icon>k__BackingField: {fileID: 21300000, guid: 3e85cdf74e325fa40a2c9e688dc51325, type: 3}
-    <Name>k__BackingField: asd
-    <Description>k__BackingField: asd
+    <Name>k__BackingField: Cloak Elbow
+    <Description>k__BackingField: BulletproofElbow
     <MaxStack>k__BackingField: 1
     <EquipmentType>k__BackingField: 2
   - <Id>k__BackingField: 104
     <Icon>k__BackingField: {fileID: 21300000, guid: 0e06a0418c1fb7a4abedb03ea9c66359, type: 3}
-    <Name>k__BackingField: asd
-    <Description>k__BackingField: asd
+    <Name>k__BackingField: Wrist
+    <Description>k__BackingField: Bulletproof Cloak Wrist
     <MaxStack>k__BackingField: 1
     <EquipmentType>k__BackingField: 3
   - <Id>k__BackingField: 105
     <Icon>k__BackingField: {fileID: 21300000, guid: 1aa8d4e1c6a8e934595f9ab61f2bf8aa, type: 3}
-    <Name>k__BackingField: asd
-    <Description>k__BackingField: asd
+    <Name>k__BackingField: Helmet
+    <Description>k__BackingField: Military Helmet
     <MaxStack>k__BackingField: 1
     <EquipmentType>k__BackingField: 0

@@ -5,10 +5,12 @@ namespace Enemys
 {
     public class Moveble
     {
+        private const int RotationByBack = 180;
+
         private float _moveSpeed;
         private Transform _transform;
 
-        public Moveble(Transform transfrom,float moveSpeed)
+        public Moveble(Transform transfrom, float moveSpeed)
         {
             _moveSpeed = moveSpeed;
             _transform = transfrom;
@@ -24,10 +26,18 @@ namespace Enemys
 
             Rotate(direction);
         }
+
         private void Rotate(Vector2 direction)
         {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            _transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            Vector3 newLocalScale = Vector3.one;
+
+            if (direction.x < 0)
+                newLocalScale.x = -1;
+            else
+                newLocalScale.x = 1;
+
+            _transform.localScale = newLocalScale;
         }
     }
+
 }

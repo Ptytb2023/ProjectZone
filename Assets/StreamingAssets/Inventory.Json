@@ -3,28 +3,28 @@
     "Size": 23,
     "Slots": [
       {
-        "ItemId": "301",
-        "Amount": 32
+        "ItemId": "201",
+        "Amount": 1
       },
       {
-        "ItemId": "301",
-        "Amount": 32
+        "ItemId": "202",
+        "Amount": 1
       },
       {
-        "ItemId": "301",
-        "Amount": 42
+        "ItemId": "202",
+        "Amount": 1
       },
       {
-        "ItemId": "102",
+        "ItemId": "101",
         "Amount": 1
       },
       {
         "ItemId": "301",
-        "Amount": 55
+        "Amount": 50
       },
       {
-        "ItemId": "",
-        "Amount": 0
+        "ItemId": "202",
+        "Amount": 1
       },
       {
         "ItemId": "",
@@ -106,7 +106,7 @@
       "Type": 0
     },
     {
-      "itemId": "",
+      "itemId": "102",
       "Type": 1
     },
     {
@@ -114,7 +114,7 @@
       "Type": 2
     },
     {
-      "itemId": "",
+      "itemId": "104",
       "Type": 3
     },
     {

@@ -73,7 +73,7 @@ namespace Inventarys
             if (availdCount <= 0)
                 return new RemoveItemResult(idItem, count, false);
 
-            int remove = Mathf.Clamp(availdCount, count, availdCount);
+            int remove = Mathf.Clamp(count, count, availdCount);
             return RemoveItem(idItem, remove);
         }
 

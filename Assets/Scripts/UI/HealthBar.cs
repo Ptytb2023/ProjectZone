@@ -1,0 +1,22 @@
+﻿using Enemys;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace UI
+{
+    public class HealthBar : MonoBehaviour
+    {
+        [SerializeField] private Slider _healthBarSlider;
+        [SerializeField] private Health _health;
+
+
+        private void OnEnable() => 
+            _health.Value.SubscribeAndUpdate(OnChageHealth);
+
+        private void OnDisable() =>
+            _health.Value.Unsubscribe(OnChageHealth);
+
+        private void OnChageHealth(float value) => 
+            _healthBarSlider.value = value / _health.MaxValue;
+    }
+}

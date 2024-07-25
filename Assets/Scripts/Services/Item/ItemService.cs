@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ItemSystem;
+using Unity.Mathematics;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 namespace Services
 {
@@ -41,5 +45,11 @@ namespace Services
 
         public bool ContainsItem(string itemId) =>
             _items.ContainsKey(itemId);
+
+        public IItem GetRandomItem()
+        {
+            int randomIndex = Random.Range(0,_items.Count);
+            return _items.ElementAt(randomIndex).Value;
+        }
     }
 }

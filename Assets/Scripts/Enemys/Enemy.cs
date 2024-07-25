@@ -6,15 +6,15 @@ namespace Enemys
     [RequireComponent(typeof(Health))]
     public class Enemy : MonoBehaviour, IDamageble
     {
-        private Health _health;  
+        private Health _health;
         private EnemyStateMachine _enemyStateMachine;
 
-        public event Action Died;
+        public event Action<Enemy> Died;
 
-        private void Awake() => 
+        private void Awake() =>
             _health = GetComponent<Health>();
 
-        public void Init(EnemyStateMachine enemyStateMachine)=>
+        public void Init(EnemyStateMachine enemyStateMachine) =>
             _enemyStateMachine = enemyStateMachine;
 
         private void OnEnable()
@@ -27,7 +27,7 @@ namespace Enemys
 
         private void OnDisable()
         {
-            if(_enemyStateMachine is not null)
+            if (_enemyStateMachine is not null)
                 _enemyStateMachine.Stop();
 
             _health.Value.Unsubscribe(OnChangeHealth);
@@ -39,9 +39,10 @@ namespace Enemys
         private void OnChangeHealth(float value)
         {
             if (value <= 0)
-                Died?.Invoke();
-
-            Destroy(gameObject);
+            {
+                Died?.Invoke(this);
+                Destroy(gameObject);
+            }
         }
     }
 }

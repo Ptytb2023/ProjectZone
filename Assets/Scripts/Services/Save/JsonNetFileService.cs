@@ -12,7 +12,17 @@ namespace Services.Save
 
             string json = await reader.ReadToEndAsync();
 
-            return JsonConvert.DeserializeObject<TModel>(json);
+            TModel model;
+            try
+            {
+                model = JsonConvert.DeserializeObject<TModel>(json);
+            }
+            catch (JsonSerializationException)
+            {
+                model = default;
+            }
+
+            return model;
         }
 
         public async Task SaveAsync<TModel>(TModel model, string filePath)

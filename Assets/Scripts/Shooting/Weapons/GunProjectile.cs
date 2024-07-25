@@ -41,7 +41,7 @@ namespace Shooting.Weapons
 
         }
 
-        protected override IEnumerator PerformReload(Action onComplited)
+        protected override IEnumerator PerformReload()
         {
             yield return _weaponReloadTime;
 
@@ -53,10 +53,10 @@ namespace Shooting.Weapons
             if (result.Success)
                 CurrentAmmo.Value = result.AmountRemoved;
 
-            onComplited?.Invoke();
+          IsCanShoot = true;
         }
 
-        protected override IEnumerator PerformShoot(Action onComplited)
+        protected override IEnumerator PerformShoot()
         {
             var bullet = _pool.Request();
 
@@ -68,7 +68,7 @@ namespace Shooting.Weapons
             bullet.Shoot(position, direction, damage);
 
             yield return _weaponRate;
-            onComplited?.Invoke();
+            IsCanShoot = true;
         }
     }
 }

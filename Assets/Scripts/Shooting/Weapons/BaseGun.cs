@@ -14,40 +14,46 @@ namespace Shooting.Weapons
         protected Coroutine CurrentAction;
         protected IReactiveProperty<int> CurrentAmmo;
 
-        private bool _isCanShoot;
+        protected bool IsCanShoot;
+
+        public event Action<float> ReloadStart;
 
         public IReadOnlyReactiveProperty<int> Ammo => CurrentAmmo;
 
-        private void Awake() => 
+        private void Awake()
+        {
+            IsCanShoot = true;
             CurrentAmmo = new ReactiveProperty<int>(AmmoReloadSettings.MagazineSize);
+        }
 
         public override void TryShoot()
         {
-            if (CurrentAction is not null)
+            if (!IsCanShoot)
                 return;
 
             if (CurrentAmmo.Value <= 0)
             {
-                CurrentAction = StartCoroutine(PerformReload(ResetAction));
+                Reload();
                 return;
             }
 
             CurrentAmmo.Value--;
-            CurrentAction = StartCoroutine(PerformShoot(ResetAction));
+            CurrentAction = StartCoroutine(PerformShoot());
+            IsCanShoot = false;
         }
 
         public void Reload()
         {
-            if (CurrentAction is not null)
+            if (!IsCanShoot)
                 return;
 
-            CurrentAction = StartCoroutine(PerformReload(ResetAction));
+            ReloadStart?.Invoke(AmmoReloadSettings.ReloadTime);
+            CurrentAction = StartCoroutine(PerformReload());
+            IsCanShoot = false;
         }
 
-        private void ResetAction() =>
-            CurrentAction = null;
 
-        protected abstract IEnumerator PerformReload(Action onComplete);
-        protected abstract IEnumerator PerformShoot(Action onComplete);
+        protected abstract IEnumerator PerformReload();
+        protected abstract IEnumerator PerformShoot();
     }
 }

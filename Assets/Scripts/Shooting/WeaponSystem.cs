@@ -2,6 +2,7 @@
 using Factorys;
 using Services.Input;
 using Shooting.Weapons;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,7 @@ namespace Shooting
 {
     public class WeaponSystem : MonoBehaviour, IWeaponSystem
     {
+        [SerializeField] private ShootinReloadPanel _shootinReloadPanel; 
         [SerializeField] private Transform _weaponPoint;
 
         private IFactoryObject _factory;
@@ -36,8 +38,12 @@ namespace Shooting
             DeactivateCurrentWeapon();
 
             _currentWeapon = _factory.Creat(weapon);
+
+            if (_currentWeapon is IReloadable reloadable)
+                _shootinReloadPanel.SetWeapon(reloadable);
+
+            _currentWeapon.transform.position = Vector3.zero;
             _currentWeapon.transform.parent = _weaponPoint;
-            _weaponPoint.transform.localPosition = Vector3.zero;
         }
 
         private void DeactivateCurrentWeapon()

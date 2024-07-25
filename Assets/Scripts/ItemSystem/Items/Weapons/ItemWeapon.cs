@@ -14,6 +14,6 @@ namespace ItemSystem.Item
         public BaseWeapon Weapon => _weapon;
 
         protected override ItemType GetItemType() =>
-          ItemType.Weapons;
+          ItemType.Equipment;
     }
 }

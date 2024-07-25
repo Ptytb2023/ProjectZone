@@ -36,7 +36,7 @@ namespace Infrastructure.Initialization
 
         private async void OnEnable()
         {
-           await InitializeAsync();
+            await InitializeAsync();
         }
 
         public async override Task InitializeAsync()
@@ -44,7 +44,7 @@ namespace Infrastructure.Initialization
 
             PlayerPorgress playerProgress = await _saveService.Load();
 
-            if (playerProgress is null)
+            if (playerProgress is null || playerProgress.InventoryEquipments is null)
             {
                 playerProgress = new PlayerPorgress(_inventoryDataMainStart, _slotDataEquipment.ToList());
                 await _saveService.Save(playerProgress);

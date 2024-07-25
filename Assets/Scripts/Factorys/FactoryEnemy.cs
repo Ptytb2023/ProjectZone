@@ -18,7 +18,7 @@ namespace Factorys
         {
             Enemy enemy = _factoryObject.Creat(enemyPrefab);
 
-            TriggerObserver triggerObserver = CreatTrigger(enemy, enemyData);
+            TriggerObserver triggerObserver = GetTrigger(enemy, enemyData);
 
             Transform transform = enemy.transform;
 
@@ -32,12 +32,12 @@ namespace Factorys
             return enemy;
         }
 
-        private static TriggerObserver CreatTrigger(Enemy enemy, EnemyData enemyData)
+        private static TriggerObserver GetTrigger(Enemy enemy, EnemyData enemyData)
         {
-            CircleCollider2D collider = enemy.gameObject.AddComponent<CircleCollider2D>();
+            CircleCollider2D collider = enemy.gameObject.GetComponentInChildren<CircleCollider2D>();
             collider.isTrigger = true;
 
-            TriggerObserver triggerObserver = enemy.gameObject.AddComponent<TriggerObserver>();
+            TriggerObserver triggerObserver = collider.gameObject.AddComponent<TriggerObserver>();
             triggerObserver.SetRadius(enemyData.RadiusAgro);
             return triggerObserver;
         }

@@ -59,6 +59,7 @@ namespace Inventarys.View
         private void OnClickSlot(InventorySlotView view)
         {
             _cursor.gameObject.SetActive(true);
+            _cursor.transform.parent = view.transform;
             _cursor.transform.position = view.transform.position;
 
             ClickSlot?.Invoke(view.InveltorySlot, view.Index);
