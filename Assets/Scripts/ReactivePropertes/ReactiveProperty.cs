@@ -6,8 +6,13 @@ namespace ReactivePropertes
     public class ReactiveProperty<T> : IReactiveProperty<T>
     {
         private T _currentValue;
-
         private List<Action<T>> _subscribers = new List<Action<T>>();
+
+        public ReactiveProperty() =>
+            Value = default(T);
+
+        public ReactiveProperty(T value) =>
+            Value = value;
 
         public T Value
         {
@@ -22,19 +27,25 @@ namespace ReactivePropertes
         public T GetValue() =>
             Value;
 
-        public void Subscribe(Action<T> handler) =>
-            _subscribers.Add(handler);
+        public void Subscribe(Action<T> subscriber) =>
+            _subscribers.Add(subscriber);
 
-        public void SubscribeAndUpdate(Action<T> handler)
+        public void SubscribeAndUpdate(Action<T> subscriber)
         {
-            _subscribers.Add(handler);
-            handler?.Invoke(Value);
+            _subscribers.Add(subscriber);
+            subscriber?.Invoke(Value);
         }
 
-        public void UnSubscribe(Action<T> handler) =>
-            _subscribers.Remove(handler);
-
-        private void NotifySubscribers() =>
-            _subscribers.ForEach(subscribe => subscribe?.Invoke(Value));
+        public void Unsubscribe(Action<T> subscriber) =>
+            _subscribers.Remove(subscriber);
+        
+        private void NotifySubscribers()
+        {
+            for (int i = 0; i < _subscribers.Count; i++)
+            {
+                var subscriber = _subscribers[i];
+                subscriber?.Invoke(Value);
+            }
+        }
     }
 }

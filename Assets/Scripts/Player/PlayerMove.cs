@@ -10,8 +10,9 @@ namespace Player
         [SerializeField][Min(0.0f)] private float _speedMove;
 
         private Rigidbody2D _rigidbody;
-
         private IInputService _input;
+
+        public Vector2 Direction { get; private set; }
 
         [Inject]
         public void Construct(IInputService inputService) =>
@@ -22,12 +23,12 @@ namespace Player
 
         private void FixedUpdate()
         {
-            Vector2 dircetion = _input.Axis;
+            Direction = _input.Axis;
 
-            if (dircetion == Vector2.zero)
+            if (Direction == Vector2.zero)
                 return;
 
-            Move(dircetion);
+            Move(Direction);
         }
 
         private void Move(Vector2 direction)
@@ -38,7 +39,6 @@ namespace Player
 
             _rigidbody.MovePosition(movementVector);
         }
-
 
         private void OnValidate() =>
             GetComponent<Rigidbody2D>().gravityScale = 0;

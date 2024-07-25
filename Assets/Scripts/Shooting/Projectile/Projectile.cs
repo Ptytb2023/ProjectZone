@@ -1,17 +1,23 @@
-﻿using System;
+﻿using Enemys;
+using PoolObject;
+using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Shooting.Projectiles
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    public class Projectile : MonoBehaviour, IProjectile
+    public class Projectile : MonoBehaviour, IProjectile, IPoolabel
     {
         [SerializeField] private float _speedBullet;
 
+        private IPool<Projectile> _pool;
         private Rigidbody2D _rigidbody;
         private float _damage;
 
+        [Inject]
+        public void Construct(IPool<Projectile> pool) =>
+            _pool = pool;
 
         private void Awake()
         {
@@ -43,5 +49,21 @@ namespace Shooting.Projectiles
             }
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!collision.gameObject.TryGetComponent(out Enemy enemy))
+                return;
+
+            enemy.TakeDemage(_damage);
+            _pool.Return(this);
+        }
+
+        public void OnSpawn()
+        {
+        }
+
+        public void OnDisapw()
+        {
+        }
     }
 }

@@ -18,7 +18,6 @@ namespace Extensions
             _asyncOperation = asyncOperation;
 
         public bool IsCompleted => _asyncOperation.isDone;
-
         public AsyncOperation GetResult() => _asyncOperation;
 
         public void OnCompleted(Action continuation) => 

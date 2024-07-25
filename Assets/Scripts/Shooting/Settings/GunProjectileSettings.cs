@@ -1,5 +1,4 @@
-﻿using Shooting.Projectiles;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Shooting.Settings
@@ -8,6 +7,5 @@ namespace Shooting.Settings
     public class GunProjectileSettings
     {
         [field: SerializeField] public Transform ShootPoint { get; private set; }
-        [field: SerializeField] public Projectile ProjectilePrefab { get; private set; }
     }
 }

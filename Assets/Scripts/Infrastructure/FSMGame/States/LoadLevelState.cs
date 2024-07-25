@@ -1,25 +1,32 @@
 using DataPersistence;
+using Services.Input;
 using Services.SceneLoaders;
 
 namespace Infrastructure.FSMGame
 {
-
     public class LoadLevelState : IPayloadedState<Scene>
     {
-        private readonly IServiceSceneLoader _serviceProvider;
+        private readonly IInputService _inputService;
+        private readonly IServiceSceneLoader _sceneSercvice;
 
-        public LoadLevelState(IServiceSceneLoader serviceProvider)
+        private Scene _currenScene;
+
+        public LoadLevelState(IServiceSceneLoader sceneSercvice, IInputService inputService)
         {
-            _serviceProvider = serviceProvider;
+            _sceneSercvice = sceneSercvice;
+            _inputService = inputService;
         }
 
-        public void Enter(Scene payload)
+        public async void Enter(Scene payload)
         {
-            _serviceProvider.LoadAsync(payload);
+            await _sceneSercvice.LoadAsync(payload);
+            _inputService.SetActive(true);
         }
 
-        public void Exit()
+        public async void Exit()
         {
+            await _sceneSercvice.UnLoadAsync(_currenScene);
+            _inputService.SetActive(false);
         }
     }
 }

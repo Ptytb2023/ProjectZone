@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &136778928722106869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2211617494820213627}
+  - component: {fileID: 5836627101679949527}
+  m_Layer: 0
+  m_Name: CorutineService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2211617494820213627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136778928722106869}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4522190032106490998}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5836627101679949527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136778928722106869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49be42c5433b44846ba5d5134db8c18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8515303169376095511
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +56,7 @@ GameObject:
   - component: {fileID: 1123720566019637963}
   - component: {fileID: 994463545545613482}
   - component: {fileID: 7531031285081865182}
-  - component: {fileID: 3631690375679617334}
+  - component: {fileID: 6029815322780589885}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -32,7 +76,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2211617494820213627}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1123720566019637963
@@ -51,7 +96,6 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 994463545545613482}
   - {fileID: 7531031285081865182}
-  - {fileID: 3631690375679617334}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -78,6 +122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a9837ec0632fb4ba9048cae9969ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _corutineService: {fileID: 5836627101679949527}
+  _pathToPlayerProggress: {fileID: 11400000, guid: d47720f3f5dbcd44fb2b2f98490dcf1a, type: 2}
+  _playerInputView: {fileID: 8187270285362958455, guid: b32b3c7a13af17441bd4fff77e8be794, type: 3}
+  _itemData: {fileID: 11400000, guid: 16cd446617895dc4e8ffd5f5120405f4, type: 2}
 --- !u!114 &7531031285081865182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32167f6ba6d0834f98407e600ca9695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3631690375679617334
+--- !u!114 &6029815322780589885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +147,68 @@ MonoBehaviour:
   m_GameObject: {fileID: 8515303169376095511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60e2ee105ad0e614f807eb2c3b542835, type: 3}
+  m_Script: {fileID: 11500000, guid: a78cfec1d040348449038b3268b88219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uIInputModelPrefab: {fileID: 3959362001883458324, guid: b32b3c7a13af17441bd4fff77e8be794, type: 3}
+  _inventoryDataMainStart:
+    <Size>k__BackingField: 23
+    <Slots>k__BackingField:
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 32
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 32
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 42
+    - <ItemId>k__BackingField: 102
+      <Amount>k__BackingField: 1
+    - <ItemId>k__BackingField: 301
+      <Amount>k__BackingField: 55
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+    - <ItemId>k__BackingField: 
+      <Amount>k__BackingField: 0
+  _slotDataEquipment:
+  - <itemId>k__BackingField: 101
+    <Type>k__BackingField: 4
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 0
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 1
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 2
+  - <itemId>k__BackingField: 
+    <Type>k__BackingField: 3
+  - <itemId>k__BackingField: 201
+    <Type>k__BackingField: 5

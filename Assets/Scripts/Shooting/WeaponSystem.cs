@@ -1,61 +1,61 @@
-﻿using Services.Input;
+﻿using System;
+using Factorys;
+using Services.Input;
 using Shooting.Weapons;
+using UI;
 using UnityEngine;
 using Zenject;
-using System;
 
 namespace Shooting
 {
-    public class WeaponSystem : MonoBehaviour
+    public class WeaponSystem : MonoBehaviour, IWeaponSystem
     {
-        [SerializeField] private Transform _gunParent;
+        [SerializeField] private ShootinReloadPanel _shootinReloadPanel; 
+        [SerializeField] private Transform _weaponPoint;
 
-        private IGun _currentWeapon;
+        private IFactoryObject _factory;
+        private BaseWeapon _currentWeapon;
         private IInputService _inputService;
 
-        private ShootingRate _shootingRate = new ShootingRate();
+        public BaseWeapon CurrentWeapom => _currentWeapon;  
 
-        [Inject]    
-        private void Construct(IInputService inputService) =>
+        [Inject]
+        private void Construct(IInputService inputService, IFactoryObject factory)
+        {
             _inputService = inputService;
-    
+            _factory = factory;
+        }
+
         private void OnEnable() =>
             _inputService.PressedShoot += OnPressedShoot;
 
         private void OnDisable() =>
             _inputService.PressedShoot -= OnPressedShoot;
 
-
-        public void EquipWeapon(IGun gun)
+        public void EquipWeapon(BaseWeapon weapon)
         {
-            if (gun is null)
-                throw new NullReferenceException($"the passed parameter {nameof(gun)} is missing null");
+            if (weapon == null)
+                throw new ArgumentNullException(nameof(weapon), "The weapon cannot be null.");
 
             DeactivateCurrentWeapon();
 
-            _currentWeapon = gun;
-            _currentWeapon.AmmoChanged.Subscribe(OnAmmoChanged);
-            _shootingRate.SetShotsPerSecond(_currentWeapon.Settings.ShotsPerSecond);
+            _currentWeapon = _factory.Creat(weapon);
+
+            if (_currentWeapon is IReloadable reloadable)
+                _shootinReloadPanel.SetWeapon(reloadable);
+
+            _currentWeapon.transform.position = Vector3.zero;
+            _currentWeapon.transform.parent = _weaponPoint;
         }
 
         private void DeactivateCurrentWeapon()
         {
-            if (_currentWeapon is null)
-                return;
-
-            _currentWeapon.SetActive(false);
-            _currentWeapon.AmmoChanged.UnSubscribe(OnAmmoChanged);
-        }
-
-        private void OnAmmoChanged(int count)
-        {
-            if (count > 0)
-                return;
-
-            _currentWeapon.Reload();
+            if (_currentWeapon is not null)
+                Destroy(_currentWeapon.gameObject);
         }
 
         private void OnPressedShoot() =>
-            _shootingRate.AttemptToShoot(_currentWeapon);
+            _currentWeapon.TryShoot();
+
     }
 }

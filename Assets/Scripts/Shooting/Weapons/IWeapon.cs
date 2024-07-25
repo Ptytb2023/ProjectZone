@@ -1,23 +1,33 @@
 ﻿using ReactivePropertes;
 using Shooting.Settings;
+using System;
 
 namespace Shooting.Weapons
 {
     public interface IWeapon
     {
-        public WeaponSettings Settings { get; }
-        void Shoot();
-        void SetActive(bool value);
+        WeaponSettings Settings { get; }
+        void TryShoot();
     }
 
     public interface IReloadable
     {
-        bool IsReloading { get; }
-        IObservable<int> AmmoChanged { get; }
+        event Action<float> ReloadStart;
+        IReadOnlyReactiveProperty<int> Ammo { get; }
         void Reload();
+
+        public class Empty : IReloadable
+        {
+            public IReadOnlyReactiveProperty<int> Ammo => null;
+
+            public event Action<float> ReloadStart;
+
+            public void Reload() => 
+                ReloadStart?.Invoke(0);
+        }
     }
 
-    public interface IGun : IWeapon, IReloadable
+    public interface IGun : IReloadable, IWeapon
     {
     }
 }
